@@ -26,6 +26,7 @@ class _MaintenanceRequestPageState extends State<MaintenanceRequestPage> {
   void updateMaintenanceRequestMessage(String message) {
     setState(() {
       maintenanceRequestMessage = message;
+      
     });
   }
 
@@ -97,7 +98,7 @@ class _AddNotesFormPageState extends State<AddNotesFormPage> {
       appBar: AppBar(
         title: Text('Maintenance Form'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +115,8 @@ class _AddNotesFormPageState extends State<AddNotesFormPage> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextFormField(
-              decoration: InputDecoration(),
+              decoration:
+                  InputDecoration(labelText: 'Hostel Name'), // Added label
             ),
 
             Text(
@@ -122,107 +124,11 @@ class _AddNotesFormPageState extends State<AddNotesFormPage> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextFormField(
-              decoration: InputDecoration(),
+              decoration:
+                  InputDecoration(labelText: 'Room Number'), // Added label
             ),
 
             SizedBox(height: 20),
-
-            // Table to arrange the checkboxes in columns
-            Table(
-              columnWidths: {
-                0: FlexColumnWidth(1), // Column 1 width
-                1: FlexColumnWidth(1), // Column 2 width
-              },
-              children: [
-                TableRow(
-                  children: [
-                    TableCell(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Broken Items:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          for (int i = 0; i < 7; i++)
-                            Row(
-                              children: [
-                                Text(getCheckboxLabel(i)),
-                                Checkbox(
-                                  value: isCheckedList[i],
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      isCheckedList[i] = newValue!;
-                                    });
-                                  },
-                                  activeColor: Colors.white,
-                                  checkColor: Colors.green,
-                                ),
-                              ],
-                            ),
-                        ],
-                      ),
-                    ),
-                    TableCell(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Missing Items:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Row(
-                            children: [
-                              Text('Light Bulb'),
-                              Checkbox(
-                                value: missingItems[0],
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    missingItems[0] = newValue!;
-                                  });
-                                },
-                                activeColor: Colors.white,
-                                checkColor: Colors.green,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('Shower Cap'),
-                              Checkbox(
-                                value: missingItems[1],
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    missingItems[1] = newValue!;
-                                  });
-                                },
-                                activeColor: Colors.white,
-                                checkColor: Colors.green,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('Table'),
-                              Checkbox(
-                                value: missingItems[2],
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    missingItems[2] = newValue!;
-                                  });
-                                },
-                                activeColor: Colors.white,
-                                checkColor: Colors.green,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
 
             // Image Upload
             Text(
@@ -291,26 +197,5 @@ class _AddNotesFormPageState extends State<AddNotesFormPage> {
         ),
       ),
     );
-  }
-
-  String getCheckboxLabel(int index) {
-    switch (index) {
-      case 0:
-        return 'Chair:';
-      case 1:
-        return 'Windows:';
-      case 2:
-        return 'TubeLight:';
-      case 3:
-        return 'Door:';
-      case 4:
-        return 'Fan:';
-      case 5:
-        return 'Wardrobe:';
-      case 6:
-        return 'Switch';
-      default:
-        return '';
-    }
   }
 }

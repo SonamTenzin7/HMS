@@ -19,4 +19,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-// Hostel Management SYstem 8
