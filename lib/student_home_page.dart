@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/room_details_page.dart';
+import 'package:studentlogin/inventory_list_page.dart';
 import 'package:studentlogin/room_change_request_page.dart';
 import 'package:studentlogin/maintenance_request_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -40,7 +40,7 @@ class StudentHomePage extends StatelessWidget {
                     FontAwesomeIcons.graduationCap,
                     size: 70,
                     color: Colors.black,
-                  )
+                  ),
                 ],
               ),
             ),
@@ -98,14 +98,139 @@ class StudentHomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MaintenanceRequestPage()),
+                    builder: (context) => MaintenanceRequestPage(),
+                  ),
                 );
               },
             ),
           ],
         ),
       ),
-      body: Center(),
+      body: Card(
+        margin: EdgeInsets.all(16.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Room Details',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Table(
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: [
+                  TableRow(
+                    children: [
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              8.0), // Add cell spacing here
+                          child: Center(child: Text('Hostel Name:')),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              8.0), // Add cell spacing here
+                          child: Text('Your Hostel Name'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              8.0), // Add cell spacing here
+                          child: Center(child: Text('Room Number:')),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              8.0), // Add cell spacing here
+                          child: Text('Your Room Number'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Add more rows for room details as needed
+                ],
+                border: TableBorder.all(
+                  color: Colors.black, // Border color
+                  width: 2.0, // Border width
+                  style: BorderStyle.solid, // Border style
+                ),
+              ),
+              Divider(
+                height: 30,
+                thickness: 5,
+              ),
+              Text(
+                'Room Members',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Table(
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: [
+                  TableRow(
+                    children: [
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              8.0), // Add cell spacing here
+                          child: Icon(FontAwesomeIcons.user),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              8.0), // Add cell spacing here
+                          child: Text('Member 1'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              8.0), // Add cell spacing here
+                          child: Icon(FontAwesomeIcons.user),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(
+                              8.0), // Add cell spacing here
+                          child: Text('Member 2'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Add more rows for room members as needed
+                ],
+                border: TableBorder.all(
+                  color: Colors.black,
+                  width: 2.0,
+                  style: BorderStyle.solid,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -186,8 +186,9 @@ class _AddNotesFormPageState extends State<AddNotesFormPage> {
                       String reason = reasonController.text;
                       // Check if required fields are not empty
                       if (hostelName.isNotEmpty && roomNumber.isNotEmpty) {
-                        String message = 'Maintenance request submitted.';
-                        widget.onFormSubmit(message);
+                        widget.onFormSubmit(hostelName);
+                        widget.onFormSubmit(roomNumber);
+                        widget.onFormSubmit(reason);
                       }
                     },
                     child: Text('Submit'),
