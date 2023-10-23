@@ -5,21 +5,30 @@
             "name": "studentlogin",
             "request": "launch",
             "type": "dart",
+<<<<<<< HEAD
             "program": "lib/my_app.dart" // Set the program attribute to your entry point
+=======
+>>>>>>> ce5e8b8df6cb9f9b27beac017e4df22ecc4f8632
         },
         {
             "name": "studentlogin (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
+<<<<<<< HEAD
             "program": "lib/my_app.dart" // Set the program attribute to your entry point
+=======
+>>>>>>> ce5e8b8df6cb9f9b27beac017e4df22ecc4f8632
         },
         {
             "name": "studentlogin (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",
+<<<<<<< HEAD
             "program": "lib/my_app.dart" // Set the program attribute to your entry point
+=======
+>>>>>>> ce5e8b8df6cb9f9b27beac017e4df22ecc4f8632
         }
     ]
 }
