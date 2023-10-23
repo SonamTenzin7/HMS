@@ -26,7 +26,6 @@ class _MaintenanceRequestPageState extends State<MaintenanceRequestPage> {
   void updateMaintenanceRequestMessage(String message) {
     setState(() {
       maintenanceRequestMessage = message;
-      
     });
   }
 

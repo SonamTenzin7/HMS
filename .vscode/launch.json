@@ -7,19 +7,19 @@
         {
             "name": "studentlogin",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "studentlogin (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
         },
         {
             "name": "studentlogin (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
         }
     ]
 }

@@ -4,232 +4,205 @@ import 'package:studentlogin/room_change_request_page.dart';
 import 'package:studentlogin/maintenance_request_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class StudentHomePage extends StatelessWidget {
+class StudentHomePage extends StatefulWidget {
   const StudentHomePage({Key? key}) : super(key: key);
+
+  @override
+  _StudentHomePageState createState() => _StudentHomePageState();
+}
+
+class _StudentHomePageState extends State<StudentHomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+        length: 4,
+        vsync: this); // Four tabs for menu, house, wrench, and notifications
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  bool isCardVisible = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Student Dashboard'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 238, 149, 61),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    'Student_Name',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  Icon(
-                    FontAwesomeIcons.graduationCap,
-                    size: 70,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: Colors.white, // Color of the underline
+          tabs: <Widget>[
+            Tab(
+              icon: Icon(FontAwesomeIcons.bars),
+              text: 'Menu',
             ),
-            ListTile(
-              leading: Icon(
-                FontAwesomeIcons.house,
-                size: 25,
-                color: Colors.black,
-              ),
-              title: const Text('Hostel'),
-              onTap: () {
-                Navigator.pop(context); // Close the drawer
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RoomDetailsPage()),
-                );
-              },
+            Tab(
+              icon: Icon(FontAwesomeIcons.house),
+              text: 'Home',
             ),
-            ListTile(
-              leading: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.arrowUp,
-                    color: Colors.green,
-                    size: 15,
-                  ),
-                  const Icon(
-                    FontAwesomeIcons.arrowDown,
-                    color: Colors.red,
-                    size: 15,
-                  ),
-                ],
-              ),
-              title: const Text('Request Room Change'),
-              onTap: () {
-                Navigator.pop(context); // Close the drawer
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RoomChangeRequestPage(),
-                  ),
-                );
-              },
+            Tab(
+              icon: Icon(FontAwesomeIcons.wrench),
+              text: 'Maintenance',
             ),
-            ListTile(
-              leading: const Icon(
-                Icons.settings,
-                color: Colors.black,
-                size: 30,
-              ),
-              title: const Text('Request Maintenance'),
-              onTap: () {
-                Navigator.pop(context); // Close the drawer
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MaintenanceRequestPage(),
-                  ),
-                );
-              },
+            Tab(
+              icon: Icon(Icons.notifications),
+              text: 'Notifications',
             ),
           ],
         ),
       ),
-      body: Card(
-        margin: EdgeInsets.all(16.0),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Room Details',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10),
-              Table(
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: [
-                  TableRow(
-                    children: [
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0), // Add cell spacing here
-                          child: Center(child: Text('Hostel Name:')),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0), // Add cell spacing here
-                          child: Text('Your Hostel Name'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0), // Add cell spacing here
-                          child: Center(child: Text('Room Number:')),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0), // Add cell spacing here
-                          child: Text('Your Room Number'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // Add more rows for room details as needed
-                ],
-                border: TableBorder.all(
-                  color: Colors.black, // Border color
-                  width: 2.0, // Border width
-                  style: BorderStyle.solid, // Border style
-                ),
-              ),
-              Divider(
-                height: 30,
-                thickness: 5,
-              ),
-              Text(
-                'Room Members',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10),
-              Table(
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: [
-                  TableRow(
-                    children: [
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0), // Add cell spacing here
-                          child: Icon(FontAwesomeIcons.user),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0), // Add cell spacing here
-                          child: Text('Member 1'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TableRow(
-                    children: [
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0), // Add cell spacing here
-                          child: Icon(FontAwesomeIcons.user),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(
-                              8.0), // Add cell spacing here
-                          child: Text('Member 2'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // Add more rows for room members as needed
-                ],
-                border: TableBorder.all(
-                  color: Colors.black,
-                  width: 2.0,
-                  style: BorderStyle.solid,
-                ),
-              ),
-            ],
+      body: TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          // Your content for the "Menu" tab
+          Container(
+            child: Center(
+              child: Text("Wrench Content"),
+            ),
           ),
-        ),
+          // Your content for the "House" tab
+          Visibility(
+            visible: isCardVisible,
+            child: Card(
+              margin: EdgeInsets.all(16.0),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Room Details',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Table(
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      children: [
+                        TableRow(
+                          children: [
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(child: Text('Hostel Name:')),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('Your Hostel Name'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(child: Text('Room Number:')),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('Your Room Number'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Add more rows for room details as needed
+                      ],
+                      border: TableBorder.all(
+                        color: Colors.black,
+                        width: 2.0,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                    Divider(
+                      height: 30,
+                      thickness: 5,
+                    ),
+                    Text(
+                      'Room Members',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Table(
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      children: [
+                        TableRow(
+                          children: [
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(FontAwesomeIcons.user),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('Member 1'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        TableRow(
+                          children: [
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(FontAwesomeIcons.user),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('Member 2'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Add more rows for room members as needed
+                      ],
+                      border: TableBorder.all(
+                        color: Colors.black,
+                        width: 2.0,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Your content for the "Wrench" tab
+          Container(
+            child: Center(
+              child: Text("Wrench Content"),
+            ),
+          ),
+          // Your content for the "Notifications" tab
+          Container(
+            child: Center(
+              child: Text("Notifications Content"),
+            ),
+          ),
+        ],
       ),
     );
   }
