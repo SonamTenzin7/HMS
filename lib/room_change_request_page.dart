@@ -110,7 +110,8 @@ class _RoomChangeRequestPageState extends State<RoomChangeRequestPage> {
                     const SizedBox(height: 20),
                     const Text(
                       'Submitted Data:',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
                     Text('Present Hostel: $_presentHostel'),

@@ -63,8 +63,92 @@ class _StudentHomePageState extends State<StudentHomePage>
         children: <Widget>[
           // Your content for the "Menu" tab
           Container(
-            child: Center(
-              child: Text("Wrench Content"),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 30),
+                Icon(
+                  Icons.person_2,
+                  size: 40,
+                ),
+                Text(
+                  'Student Name',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                SizedBox(height: 60),
+                Container(
+                  width: 400, // Set the width of the Card
+                  height: 100, // Set the height of the Card
+                  child: Card(
+                    color: Color.fromARGB(255, 234, 170, 31),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Icon(
+                          FontAwesomeIcons.wrench,
+                          size: 30,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Maintenance Request',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  width: 400, // Set the width of the Card
+                  height: 100, // Set the height of the Card
+                  child: Card(
+                    color: Color.fromARGB(255, 234, 170, 31),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Image.asset(
+                          'images/transfer.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Request Room Change',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  width: 400, // Set the width of the Card
+                  height: 50, // Set the height of the Card
+                  child: Card(
+                    color: Colors.grey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.logout,
+                            size: 20,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'LogOut',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           // Your content for the "House" tab
@@ -150,14 +234,19 @@ class _StudentHomePageState extends State<StudentHomePage>
                             TableCell(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Icon(FontAwesomeIcons.user),
+                                child: Text('Name'),
                               ),
                             ),
                             TableCell(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text('Member 1'),
+                                child: Text('Department'),
                               ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('Year')),
                             ),
                           ],
                         ),
@@ -166,13 +255,19 @@ class _StudentHomePageState extends State<StudentHomePage>
                             TableCell(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Icon(FontAwesomeIcons.user),
+                                child: Text(''),
                               ),
                             ),
                             TableCell(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text('Member 2'),
+                                child: Text(''),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(''),
                               ),
                             ),
                           ],
