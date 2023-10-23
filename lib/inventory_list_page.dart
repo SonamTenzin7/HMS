@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RoomDetailsPage extends StatelessWidget {
+  const RoomDetailsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +34,7 @@ class RoomDetailsPage extends StatelessWidget {
                         DataColumn(label: Text('Item')),
                         DataColumn(label: Text('Quantity')),
                       ],
-                      rows: [
+                      rows: const [
                         DataRow(
                           cells: [
                             DataCell(Text('Chair')),

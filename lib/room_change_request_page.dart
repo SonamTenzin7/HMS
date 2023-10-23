@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class RoomChangeRequestPage extends StatefulWidget {
+  const RoomChangeRequestPage({super.key});
+
   @override
   _RoomChangeRequestPageState createState() => _RoomChangeRequestPageState();
 }
 
 class _RoomChangeRequestPageState extends State<RoomChangeRequestPage> {
   final _formKey = GlobalKey<FormState>();
-  String _reason = '';
+  final String _reason = '';
   String _newHostel = 'Hostel B'; // Default value for the new hostel
   String _presentHostel = 'Hostel A'; // Default value for present hostel
   bool _isSubmitted = false;
