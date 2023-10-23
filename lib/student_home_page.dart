@@ -45,7 +45,7 @@ class StudentHomePage extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 FontAwesomeIcons.house,
                 size: 25,
                 color: Colors.black,
@@ -55,20 +55,20 @@ class StudentHomePage extends StatelessWidget {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RoomDetailsPage()),
+                  MaterialPageRoute(builder: (context) => const RoomDetailsPage()),
                 );
               },
             ),
             ListTile(
-              leading: Row(
+              leading: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
+                  Icon(
                     FontAwesomeIcons.arrowUp,
                     color: Colors.green,
                     size: 15,
                   ),
-                  const Icon(
+                  Icon(
                     FontAwesomeIcons.arrowDown,
                     color: Colors.red,
                     size: 15,
@@ -81,7 +81,7 @@ class StudentHomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => RoomChangeRequestPage(),
+                    builder: (context) => const RoomChangeRequestPage(),
                   ),
                 );
               },
@@ -98,7 +98,7 @@ class StudentHomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MaintenanceRequestPage(),
+                    builder: (context) => const MaintenanceRequestPage(),
                   ),
                 );
               },
@@ -107,35 +107,35 @@ class StudentHomePage extends StatelessWidget {
         ),
       ),
       body: Card(
-        margin: EdgeInsets.all(16.0),
+        margin: const EdgeInsets.all(16.0),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Room Details',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Table(
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: [
+                children: const [
                   TableRow(
                     children: [
                       TableCell(
                         child: Padding(
-                          padding: const EdgeInsets.all(
+                          padding: EdgeInsets.all(
                               8.0), // Add cell spacing here
                           child: Center(child: Text('Hostel Name:')),
                         ),
                       ),
                       TableCell(
                         child: Padding(
-                          padding: const EdgeInsets.all(
+                          padding: EdgeInsets.all(
                               8.0), // Add cell spacing here
                           child: Text('Your Hostel Name'),
                         ),
@@ -146,14 +146,14 @@ class StudentHomePage extends StatelessWidget {
                     children: [
                       TableCell(
                         child: Padding(
-                          padding: const EdgeInsets.all(
+                          padding: EdgeInsets.all(
                               8.0), // Add cell spacing here
                           child: Center(child: Text('Room Number:')),
                         ),
                       ),
                       TableCell(
                         child: Padding(
-                          padding: const EdgeInsets.all(
+                          padding: EdgeInsets.all(
                               8.0), // Add cell spacing here
                           child: Text('Your Room Number'),
                         ),
@@ -168,33 +168,33 @@ class StudentHomePage extends StatelessWidget {
                   style: BorderStyle.solid, // Border style
                 ),
               ),
-              Divider(
+              const Divider(
                 height: 30,
                 thickness: 5,
               ),
-              Text(
+              const Text(
                 'Room Members',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Table(
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: [
+                children: const [
                   TableRow(
                     children: [
                       TableCell(
                         child: Padding(
-                          padding: const EdgeInsets.all(
+                          padding: EdgeInsets.all(
                               8.0), // Add cell spacing here
                           child: Icon(FontAwesomeIcons.user),
                         ),
                       ),
                       TableCell(
                         child: Padding(
-                          padding: const EdgeInsets.all(
+                          padding: EdgeInsets.all(
                               8.0), // Add cell spacing here
                           child: Text('Member 1'),
                         ),
@@ -205,14 +205,14 @@ class StudentHomePage extends StatelessWidget {
                     children: [
                       TableCell(
                         child: Padding(
-                          padding: const EdgeInsets.all(
+                          padding: EdgeInsets.all(
                               8.0), // Add cell spacing here
                           child: Icon(FontAwesomeIcons.user),
                         ),
                       ),
                       TableCell(
                         child: Padding(
-                          padding: const EdgeInsets.all(
+                          padding: EdgeInsets.all(
                               8.0), // Add cell spacing here
                           child: Text('Member 2'),
                         ),

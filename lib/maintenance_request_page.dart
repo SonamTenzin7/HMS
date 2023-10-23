@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: MaintenanceRequestPage(),
     );
   }
 }
 
 class MaintenanceRequestPage extends StatefulWidget {
+  const MaintenanceRequestPage({super.key});
+
   @override
   _MaintenanceRequestPageState createState() => _MaintenanceRequestPageState();
 }
@@ -33,7 +37,7 @@ class _MaintenanceRequestPageState extends State<MaintenanceRequestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Request Maintenance'),
+        title: const Text('Request Maintenance'),
       ),
       body: Stack(
         children: [
@@ -58,7 +62,7 @@ class _MaintenanceRequestPageState extends State<MaintenanceRequestPage> {
                   ),
                 );
               },
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
           ),
         ],
@@ -70,7 +74,7 @@ class _MaintenanceRequestPageState extends State<MaintenanceRequestPage> {
 class AddNotesFormPage extends StatefulWidget {
   final Function(String) onFormSubmit;
 
-  AddNotesFormPage({required this.onFormSubmit});
+  const AddNotesFormPage({super.key, required this.onFormSubmit});
 
   @override
   _AddNotesFormPageState createState() => _AddNotesFormPageState();
@@ -98,51 +102,51 @@ class _AddNotesFormPageState extends State<AddNotesFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Maintenance Form'),
+        title: const Text('Maintenance Form'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
+            const Text(
               'Fill out the form for your maintenance:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Text(
+            const Text(
               'Hostel Name:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextFormField(
               controller: hostelNameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Hostel Name',
               ),
             ),
 
-            Text(
+            const Text(
               'Room Number:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextFormField(
               controller: roomNumberController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Room Number',
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Image Upload
-            Text(
+            const Text(
               'Upload Image:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             ElevatedButton(
               onPressed: _getImage,
-              child: Text('Select Image'),
+              child: const Text('Select Image'),
             ),
             if (_image != null)
               Container(
@@ -155,22 +159,22 @@ class _AddNotesFormPageState extends State<AddNotesFormPage> {
                   ),
                 ),
               ),
-            Text(
+            const Text(
               'Please provide a reason for your Room maintenance request:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: reasonController,
               maxLines: 5,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter your reason here...',
                 border: OutlineInputBorder(),
               ),
             ),
 
             // Spacer to push buttons to the bottom
-            Spacer(),
+            const Spacer(),
 
             // Align buttons to the bottom center
             Align(
@@ -191,10 +195,10 @@ class _AddNotesFormPageState extends State<AddNotesFormPage> {
                         widget.onFormSubmit(reason);
                       }
                     },
-                    child: Text('Submit'),
+                    child: const Text('Submit'),
                   ),
 
-                  SizedBox(height: 10), // Adjust spacing as needed
+                  const SizedBox(height: 10), // Adjust spacing as needed
 
                   // Cancel Button
                   TextButton(
@@ -202,7 +206,7 @@ class _AddNotesFormPageState extends State<AddNotesFormPage> {
                       // Handle the cancel action, e.g., navigate back
                       Navigator.pop(context);
                     },
-                    child: Text('Cancel'),
+                    child: const Text('Cancel'),
                   ),
                 ],
               ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/student_home_page.dart';
+import 'package:studentlogin/add_hostel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const StudentHomePage(),
+      home: const AddHostel(),
     );
   }
 }
