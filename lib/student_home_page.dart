@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:studentlogin/login.dart';
+import 'package:studentlogin/maintenance_request_page.dart';
+import 'package:studentlogin/room_change_request_page.dart';
 
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({Key? key}) : super(key: key);
@@ -34,7 +37,8 @@ class _StudentHomePageState extends State<StudentHomePage>
       appBar: AppBar(
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.white, // Color of the underline
+          indicatorColor:
+              Color.fromARGB(255, 150, 255, 149), // Color of the underline
           tabs: <Widget>[
             Tab(
               icon: Icon(FontAwesomeIcons.bars),
@@ -76,71 +80,97 @@ class _StudentHomePageState extends State<StudentHomePage>
                   ),
                 ),
                 SizedBox(height: 60),
-                Container(
-                  width: 400, // Set the width of the Card
-                  height: 100, // Set the height of the Card
-                  child: Card(
-                    color: Color.fromARGB(255, 234, 170, 31),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Icon(
-                          FontAwesomeIcons.wrench,
-                          size: 30,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Maintenance Request',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  width: 400, // Set the width of the Card
-                  height: 100, // Set the height of the Card
-                  child: Card(
-                    color: Color.fromARGB(255, 234, 170, 31),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Image.asset(
-                          'images/transfer.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Request Room Change',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  width: 400, // Set the width of the Card
-                  height: 50, // Set the height of the Card
-                  child: Card(
-                    color: Colors.grey,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MaintenanceRequestPage()),
+                    );
+                  },
+                  child: Container(
+                    width: 400, // Set the width of the Card
+                    height: 100, // Set the height of the Card
+                    child: Card(
+                      color: Color.fromARGB(255, 156, 225, 255),
+                      child: Column(
                         children: [
+                          SizedBox(height: 10),
                           Icon(
-                            Icons.logout,
-                            size: 20,
+                            FontAwesomeIcons.wrench,
+                            size: 30,
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(height: 10),
                           Text(
-                            'LogOut',
+                            'Maintenance Request',
                             style: TextStyle(fontSize: 18),
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RoomChangeRequestPage()),
+                    );
+                  },
+                  child: Container(
+                    width: 400, // Set the width of the Card
+                    height: 100, // Set the height of the Card
+                    child: Card(
+                      color: Color.fromARGB(255, 156, 225, 255),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10),
+                          Image.asset(
+                            'images/transfer.png',
+                            height: 30,
+                            width: 30,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Request Room Change',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()),
+                    );
+                  },
+                  child: Container(
+                    width: 400, // Set the width of the Card
+                    height: 50, // Set the height of the Card
+                    child: Card(
+                      color: Colors.grey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              size: 20,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              'LogOut',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
