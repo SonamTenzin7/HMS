@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:studentlogin/bc_home_page.dart';
 import 'package:studentlogin/student_home_page.dart';
 import 'package:studentlogin/admin/tab_control.dart';
 class Login extends StatefulWidget {
@@ -24,10 +25,14 @@ class _LoginState extends State<Login> {
   void _handleLogin() {
     final String enteredEmail = emailController.text;
     final String enteredPassword = passwordController.text;
+    
+   final String counsellorEmail = '2';
+   final String counsellorPassword = '23';
 
-    final String email = '1';
-    final String password = '12';
+   final String studentEmail = '1';
+   final String studentPassword = '12';
 
+<<<<<<< HEAD
     final String email2 = '2';
     final String password2 = '21';
 
@@ -44,6 +49,19 @@ class _LoginState extends State<Login> {
     else {
       print('Login failed: Invalid email or password');
     }
+=======
+  if (enteredEmail == counsellorEmail && enteredPassword == counsellorPassword) {
+    Navigator.of(context).pushReplacement(
+    MaterialPageRoute(builder: (context) => BlockCounsellorHomePage()),
+ );
+} else if (enteredEmail == studentEmail && enteredPassword == studentPassword) {
+ Navigator.of(context).pushReplacement(
+    MaterialPageRoute(builder: (context) => StudentHomePage()),
+ );
+} else {
+ print('Login failed: Invalid email or password');
+}
+>>>>>>> ae8c68b46db907bfefc734a40b0b90bff810e15c
   }
 
   @override
