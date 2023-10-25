@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/nav_bar.dart';
 import 'package:studentlogin/admin/menu.dart';
+import 'package:studentlogin/admin/Maintence.dart';
 import 'package:studentlogin/admin/add_hostel.dart';
 
 class tabContr extends StatefulWidget {
@@ -30,11 +31,8 @@ class _tabContr extends State<tabContr> with SingleTickerProviderStateMixin {
         controller: _tabController,
         children: <Widget>[ 
           MenuContent(),
-          
           AddHostel(),
-          Center(
-            child: Text('Placeholder Content'),
-          ),
+          HomePageWidget(),
           Center(
             child: Text('Placeholder Content'),
           ),

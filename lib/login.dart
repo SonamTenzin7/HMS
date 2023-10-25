@@ -32,11 +32,10 @@ class _LoginState extends State<Login> {
    final String studentEmail = '1';
    final String studentPassword = '12';
 
-<<<<<<< HEAD
     final String email2 = '2';
     final String password2 = '21';
 
-    if (enteredEmail == email && enteredPassword == password) {
+    if (enteredEmail == studentEmail && enteredPassword == studentPassword) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => StudentHomePage()),
       );
@@ -46,22 +45,14 @@ class _LoginState extends State<Login> {
         MaterialPageRoute(builder: (context) => tabContr()),
         );
     }
+    else if(enteredEmail == counsellorEmail && enteredPassword == counsellorPassword) {
+        Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => BlockCounsellorHomePage()),
+        );
+    }
     else {
       print('Login failed: Invalid email or password');
     }
-=======
-  if (enteredEmail == counsellorEmail && enteredPassword == counsellorPassword) {
-    Navigator.of(context).pushReplacement(
-    MaterialPageRoute(builder: (context) => BlockCounsellorHomePage()),
- );
-} else if (enteredEmail == studentEmail && enteredPassword == studentPassword) {
- Navigator.of(context).pushReplacement(
-    MaterialPageRoute(builder: (context) => StudentHomePage()),
- );
-} else {
- print('Login failed: Invalid email or password');
-}
->>>>>>> ae8c68b46db907bfefc734a40b0b90bff810e15c
   }
 
   @override

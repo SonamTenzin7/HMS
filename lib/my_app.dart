@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/login.dart';
 import 'package:studentlogin/admin/tab_control.dart';
 
 void main() {

@@ -297,8 +297,7 @@ class _StudentHomePageState extends State<StudentHomePage>
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(''),
                               ),
-                                child: Text('Member 2'),                             ),
-                            ),
+                          ),
                           ],
                         ),
                         // Add more rows for room members as needed

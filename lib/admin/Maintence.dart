@@ -3,26 +3,7 @@ import 'package:flutter/material.dart';
 class HomePageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Maintenance'), // Change the app bar title to "Maintenance".
-        leading: Padding(
-          padding: EdgeInsets.all(10),
-          child: IconButton(
-            icon: Icon(
-              Icons.density_medium_sharp,
-              color: Colors.white,
-              size: 40,
-            ),
-            onPressed: () {
-              print('IconButton pressed ...');
-            },
-          ),
-        ),
-      ),
-      body: SafeArea(
-        top: true,
-        child: Column(
+    return Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
@@ -139,9 +120,7 @@ class HomePageWidget extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        );
   }
 }
 
