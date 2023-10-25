@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:studentlogin/student_home_page.dart';
+import 'package:studentlogin/add_hostel.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -28,11 +29,20 @@ class _LoginState extends State<Login> {
     final String email = '1';
     final String password = '12';
 
+    final String email2 = '2';
+    final String password2 = '21';
+
     if (enteredEmail == email && enteredPassword == password) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => StudentHomePage()),
       );
-    } else {
+    }
+    else if(enteredEmail == email2 && enteredPassword == password2){
+        Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => AddHostel()),
+        );
+    }
+    else {
       print('Login failed: Invalid email or password');
     }
   }
