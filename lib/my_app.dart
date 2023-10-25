@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/login.dart';
+import 'package:studentlogin/admin/tab_control.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         primaryColor: Color(0xFF0028A8),
       ),
-      home: Login(),
+      home: tabContr(),
     );
   }
 }

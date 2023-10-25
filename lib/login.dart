@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:studentlogin/student_home_page.dart';
-import 'package:studentlogin/add_hostel.dart';
-
+import 'package:studentlogin/admin/tab_control.dart';
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -39,7 +38,7 @@ class _LoginState extends State<Login> {
     }
     else if(enteredEmail == email2 && enteredPassword == password2){
         Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => AddHostel()),
+        MaterialPageRoute(builder: (context) => tabContr()),
         );
     }
     else {

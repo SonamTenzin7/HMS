@@ -169,8 +169,7 @@ class _StudentHomePageState extends State<StudentHomePage>
                             TableCell(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text('Member 2'),
-                              ),
+                                child: Text('Member 2'),                             ),
                             ),
                           ],
                         ),
