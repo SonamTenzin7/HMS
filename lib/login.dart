@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:studentlogin/bc_home_page.dart';
 import 'package:studentlogin/student_home_page.dart';
-
+import 'package:studentlogin/admin/admin_control.dart';
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -32,17 +32,27 @@ class _LoginState extends State<Login> {
    final String studentEmail = '1';
    final String studentPassword = '12';
 
-  if (enteredEmail == counsellorEmail && enteredPassword == counsellorPassword) {
-    Navigator.of(context).pushReplacement(
-    MaterialPageRoute(builder: (context) => BlockCounsellorHomePage()),
- );
-} else if (enteredEmail == studentEmail && enteredPassword == studentPassword) {
- Navigator.of(context).pushReplacement(
-    MaterialPageRoute(builder: (context) => StudentHomePage()),
- );
-} else {
- print('Login failed: Invalid email or password');
-}
+    final String email2 = '2';
+    final String password2 = '21';
+
+    if (enteredEmail == studentEmail && enteredPassword == studentPassword) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => StudentHomePage()),
+      );
+    }
+    else if(enteredEmail == email2 && enteredPassword == password2){
+        Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => AdmTab()),
+        );
+    }
+    else if(enteredEmail == counsellorEmail && enteredPassword == counsellorPassword) {
+        Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => BlockCounsellorHomePage()),
+        );
+    }
+    else {
+      print('Login failed: Invalid email or password');
+    }
   }
 
   @override
