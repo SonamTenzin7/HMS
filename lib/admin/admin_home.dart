@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:postgres/postgres.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AdmHome extends StatefulWidget {
   @override
@@ -7,52 +8,65 @@ class AdmHome extends StatefulWidget {
 }
 
 class _AdmHomeState extends State<AdmHome> {
-  List<Map<String, String>> hostelData = []; // List to store hostel name and gender
+  Future<List<Map<String, String>>>? hostelData; // Change the type to nullable
 
   @override
   void initState() {
     super.initState();
-    fetchDataFromDatabase();
+    hostelData = fetchDataFromAPI();
   }
 
-  // Function to fetch data from the PostgreSQL server
-  Future<void> fetchDataFromDatabase() async {
-    final conn = PostgreSQLConnection(
-      'ep-delicate-poetry-06982532.ap-southeast-1.aws.neon.tech',
-      5432,
-      'neondb',
-      username: 'ugy420',
-      password: 'EDrb8Re2IWux',
-    );
+  Future<List<Map<String, String>>> fetchDataFromAPI() async {
+    final Uri url = Uri.parse('http://10.2.28.201:3000/api/v1/hostels');
+    final response = await http.get(url);
 
-    try {
-      await conn.open();
-      final results = await conn.query('SELECT name, gender FROM hostel');
-      for (final row in results) {
-        final name = row[0] as String;
-        final gender = row[1] as String;
-        hostelData.add({'name': name, 'gender': gender});
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+      List<Map<String, String>> data = [];
+      for (final entry in jsonData) {
+        final Map<String, dynamic> hostel = entry as Map<String, dynamic>;
+        final String name = hostel['name'];
+        final String gender = hostel['gender'];
+        data.add({'name': name, 'gender': gender});
       }
-    } catch (e) {
-      print('Error: $e');
-    } finally {
-      await conn.close();
-      setState(() {});
+      return data;
+    } else {
+      throw Exception('Failed to load data from the API');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: hostelData.length,
-      itemBuilder: (context, index) {
-        final hostel = hostelData[index];
-        return Card(
-          child: ListTile(
-            title: Text("${hostelData[index]['name']}"),
-            subtitle: Text("${hostel['gender']}"),
-          ),
-        );
+    return FutureBuilder<List<Map<String, String>>>(
+      future: hostelData,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data == null) {
+          return Center(child: Text('No data available.'));
+        } else {
+          List<Map<String, String>> data = snapshot.data!;
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              final hostel = data[index];
+              return Card(
+                child: ListTile(
+                  title: Text("Name: ${hostel['name']}"),
+                  subtitle: Text("Gender: ${hostel['gender']}"),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      // Add your edit action here
+                    },
+                  ),
+                ),
+              );
+            },
+          );
+        }
       },
     );
   }
