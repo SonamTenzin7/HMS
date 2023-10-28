@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:studentlogin/login.dart';
+import 'package:studentlogin/Student/login.dart';
 //import 'package:studentlogin/inventory_list_page.dart';
-import 'package:studentlogin/maintenance_request_page.dart';
-import 'package:studentlogin/room_change_request_page.dart';
+import 'package:studentlogin/Student/maintenance_request_page.dart';
+import 'package:studentlogin/Student/room_change_request_page.dart';
 
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({Key? key}) : super(key: key);
