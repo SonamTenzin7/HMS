@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         primaryColor: Color(0xFF0028A8),
       ),
-      home: AdmTab(),
+      home: Login(),
     );
   }
 }
