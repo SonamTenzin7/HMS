@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/nav_bar.dart';
-import 'package:studentlogin/admin/menu.dart';
+import 'package:studentlogin/admin/admin_menu.dart';
 import 'package:studentlogin/admin/Maintence.dart';
 import 'package:studentlogin/admin/add_hostel.dart';
+import 'package:studentlogin/admin/admin_home.dart';
 
-class tabContr extends StatefulWidget {
+class AdmTab extends StatefulWidget {
   @override
-  _tabContr createState() => _tabContr();
+  _AdmTabState createState() => _AdmTabState();
 }
 
-class _tabContr extends State<tabContr> with SingleTickerProviderStateMixin {
+class _AdmTabState extends State<AdmTab> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this); // Adjust the length as needed
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -31,11 +32,9 @@ class _tabContr extends State<tabContr> with SingleTickerProviderStateMixin {
         controller: _tabController,
         children: <Widget>[ 
           MenuContent(),
-          AddHostel(),
+          AdmHome(),
           HomePageWidget(),
-          Center(
-            child: Text('Placeholder Content'),
-          ),
+          AddHostel(),
         ],
       ),
     );

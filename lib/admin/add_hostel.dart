@@ -31,7 +31,7 @@ class _AddHostelState extends State<AddHostel> with SingleTickerProviderStateMix
             Row(
               children: [
                 Radio<String>(
-                  value: 'M',
+                  value: 'Male',
                   groupValue: selectedValue,
                   onChanged: (value) {
                     setState(() {
@@ -45,7 +45,7 @@ class _AddHostelState extends State<AddHostel> with SingleTickerProviderStateMix
             Row(
               children: [
                 Radio<String>(
-                  value: 'F',
+                  value: 'Female',
                   groupValue: selectedValue,
                   onChanged: (value) {
                     setState(() {

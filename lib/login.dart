@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:studentlogin/bc_home_page.dart';
 import 'package:studentlogin/student_home_page.dart';
-import 'package:studentlogin/admin/tab_control.dart';
+import 'package:studentlogin/admin/admin_control.dart';
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
     }
     else if(enteredEmail == email2 && enteredPassword == password2){
         Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => tabContr()),
+        MaterialPageRoute(builder: (context) => AdmTab()),
         );
     }
     else if(enteredEmail == counsellorEmail && enteredPassword == counsellorPassword) {
