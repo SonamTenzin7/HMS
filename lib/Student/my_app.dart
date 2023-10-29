@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/Student/login.dart';
+import 'package:studentlogin/admin/admin_control.dart';
+import 'package:studentlogin/admin/admin_view_hostel.dart';
+import 'package:studentlogin/hostel.dart';
 
 void main() {
   runApp(const MyApp());
