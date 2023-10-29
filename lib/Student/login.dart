@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:studentlogin/bc_home_page.dart';
-import 'package:studentlogin/student_home_page.dart';
+import 'package:studentlogin/Student/bc_home_page.dart';
+import 'package:studentlogin/Student/student_home_page.dart';
 import 'package:studentlogin/admin/admin_control.dart';
 class Login extends StatefulWidget {
   const Login({super.key});

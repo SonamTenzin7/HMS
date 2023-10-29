@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:studentlogin/block_details.dart';
+import 'package:studentlogin/Student/block_details.dart';
 //import 'package:studentlogin/inventory_list_page.dart';
-import 'package:studentlogin/login.dart';
-import 'package:studentlogin/maintenance_request_page.dart';
-import 'package:studentlogin/room_change_request_page.dart';
+import 'package:studentlogin/Student/login.dart';
+import 'package:studentlogin/Student/maintenance_request_page.dart';
+import 'package:studentlogin/Student/room_change_request_page.dart';
 
 class BlockCounsellorHomePage extends StatefulWidget {
   const BlockCounsellorHomePage({Key? key}) : super(key: key);
@@ -214,6 +214,7 @@ class _StudentHomePageState extends State<BlockCounsellorHomePage>
               ],
             ),
           ),
+          
           // Your content for the "House" tab
           Visibility(
             visible: isCardVisible,

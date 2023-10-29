@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'hostel.dart';
+import '../Student/hostel.dart';
 
 class HomePageWidget extends StatelessWidget {
   @override
@@ -32,20 +32,20 @@ class HomePageWidget extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child:InkWell(
-                      onTap:() {
+                    child: InkWell(
+                      onTap: () {
                         Navigator.of(context).pushNamed('/hostels');
                       },
                       child: Center(
-                          child: Text(
-                            'Hostels',
-                            style: TextStyle(
-                              fontFamily: 'Readex Pro',
-                              fontSize: 40,
-                            ),
+                        child: Text(
+                          'Hostels',
+                          style: TextStyle(
+                            fontFamily: 'Readex Pro',
+                            fontSize: 40,
                           ),
                         ),
-                    )       
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -112,8 +112,11 @@ class HomePageWidget extends StatelessWidget {
 void main() {
   runApp(MaterialApp(
     home: HomePageWidget(),
-    routes:{
-      '/hostels':(context) => HostelsWidget(),
-    }
+    themeMode: ThemeMode.system, // Set theme mode to system
+    theme: ThemeData.light(), // Light theme
+    darkTheme: ThemeData.dark(), // Dark theme
+    routes: {
+      '/hostels': (context) => HostelsWidget(),
+    },
   ));
 }
