@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'hostel.dart';
+import '../Student/hostel.dart';
 
 class HomePageWidget extends StatelessWidget {
   @override
