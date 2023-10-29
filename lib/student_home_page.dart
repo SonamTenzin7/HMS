@@ -179,6 +179,7 @@ class _StudentHomePageState extends State<StudentHomePage>
               ],
             ),
           ),
+          
           // Your content for the "House" tab
           Visibility(
             visible: isCardVisible,

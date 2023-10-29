@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/admin_control.dart';
 import 'package:studentlogin/admin/admin_view_hostel.dart';
 import 'package:studentlogin/hostel.dart';
+import 'package:studentlogin/login.dart';
 
 void main() {
   runApp(const MyApp());

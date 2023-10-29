@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class AddHostelWidget extends StatefulWidget {
   @override
   _AddHostelWidgetState createState() => _AddHostelWidgetState();

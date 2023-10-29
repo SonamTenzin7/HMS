@@ -1,14 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:postgres/postgres.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AddHostel extends StatefulWidget {
   @override
   _AddHostelState createState() => _AddHostelState();
 }
 
-class _AddHostelState extends State<AddHostel> with SingleTickerProviderStateMixin {
+class _AddHostelState extends State<AddHostel> {
   String? selectedValue = 'M';
   final TextEditingController hostelNameController = TextEditingController();
+
+  Future<void> insertHostel() async {
+    final String name = hostelNameController.text;
+    final String gender = selectedValue!;
+
+    final String apiUrl = 'http://10.2.28.201:3000/api/addhostel'; // Replace with your API URL
+
+    // Create a Map with your data and convert it to JSON
+    final Map<String, dynamic> data = {
+      'name': name,
+      'gender': gender,
+    };
+
+    final String jsonData = jsonEncode(data);
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json', // Set the content type to JSON
+      },
+      body: jsonData, // Send the JSON data as the request body
+    );
+
+    if (response.statusCode == 201) {
+      debugPrint('Hostel added successfully');
+    } else {
+      debugPrint('Failed to add hostel. Status code: ${response.statusCode}');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,39 +92,11 @@ class _AddHostelState extends State<AddHostel> with SingleTickerProviderStateMix
         ElevatedButton(
           onPressed: () async {
             debugPrint('Button !');
-            await insertHostel(hostelNameController.text, selectedValue!);
+            await insertHostel();
           },
           child: Text('Add Hostel'),
         ),
       ],
     );
-  }
-}
-
-
-Future<void> insertHostel(String name, String gender) async {
-  final conn = PostgreSQLConnection(
-    'ep-delicate-poetry-06982532.ap-southeast-1.aws.neon.tech',
-    5432,
-   'neondb',
-    username: 'ugy420',
-    password: 'EDrb8Re2IWux',
-  );
-  
-  try {
-    await conn.open();
-    // Perform database operations
-    debugPrint("Worked!");
-    await conn.query(
-      'INSERT INTO hostel(name, gender) VALUES (@name, @gender)',
-      substitutionValues: {
-        'name': name,
-        'gender': gender,
-      },
-    );
-  } catch (e) {
-    print('Error: $e');
-  } finally {
-    await conn.close();
   }
 }
