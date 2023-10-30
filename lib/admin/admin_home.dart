@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:studentlogin/admin/admin_hostel_add.dart';
+import 'package:studentlogin/admin/admin_hostel_detail.dart';
 import 'package:studentlogin/models/hostel.dart';
 
 class AdmHome extends StatefulWidget {
@@ -17,7 +19,7 @@ class _AdmHomeState extends State<AdmHome> {
     hostelData = fetchData();
   }
 
-  Future<List<Hostel>> fetchData() async {
+  static Future<List<Hostel>> fetchData() async {
     final Uri url = Uri.parse('http://10.2.28.201:3000/api/allhostels');
     final response = await http.get(url);
 
@@ -34,7 +36,8 @@ class _AdmHomeState extends State<AdmHome> {
 
   @override
   Widget build(BuildContext context) {
-      return FutureBuilder<List<Hostel>>(
+    return Scaffold(
+      body: FutureBuilder<List<Hostel>>(
         future: hostelData,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,16 +52,36 @@ class _AdmHomeState extends State<AdmHome> {
               itemCount: data.length,
               itemBuilder: (context, index) {
                 final hostel = data[index];
-                return Card(
-                  child: ListTile(
-                    title: Text("Name: ${hostel.name}"),
-                    subtitle: Text("Gender: ${hostel.gender}"),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HostelDetail(hostel: hostel),
+                      ),
+                    );
+                  },
+                  child: Card(
+                    child: ListTile(
+                      title: Text("Name: ${hostel.name}"),
+                      subtitle: Text("Gender: ${hostel.gender}"),
+                    ),
                   ),
                 );
               },
             );
           }
         },
-      );
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddHostel()), // Use 'AddHostel' widget
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+    );
   }
 }

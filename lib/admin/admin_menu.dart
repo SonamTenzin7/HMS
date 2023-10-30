@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/admin/admin_add_hostel.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:studentlogin/student/login.dart';
 
 class MenuContent extends StatelessWidget {
@@ -24,10 +22,7 @@ class MenuContent extends StatelessWidget {
         SizedBox(height: 60),
         GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddHostel()), // Use 'AddHostel' widget
-            );
+            
           },
           child: Container(
             width: 400, // Set the width of the Card

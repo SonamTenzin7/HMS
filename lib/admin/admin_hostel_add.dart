@@ -33,7 +33,7 @@ class _AddHostelState extends State<AddHostel> {
     );
 
     if (response.statusCode == 201) {
-      debugPrint('Hostel added successfully');
+      debugPrint('Hostel added successfully'+name+ " "+ gender);
     } else {
       debugPrint('Failed to add hostel. Status code: ${response.statusCode}');
     }
@@ -44,12 +44,6 @@ class _AddHostelState extends State<AddHostel> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Hostel'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop(); // Navigate back when the back button is pressed
-          },
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
