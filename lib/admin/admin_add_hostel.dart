@@ -15,9 +15,8 @@ class _AddHostelState extends State<AddHostel> {
     final String name = hostelNameController.text;
     final String gender = selectedValue!;
 
-    final String apiUrl = 'http://10.2.28.201:3000/api/addhostel'; // Replace with your API URL
+    final String apiUrl = 'http://10.2.28.201:3000/api/addhostel';
 
-    // Create a Map with your data and convert it to JSON
     final Map<String, dynamic> data = {
       'name': name,
       'gender': gender,
@@ -28,9 +27,9 @@ class _AddHostelState extends State<AddHostel> {
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: {
-        'Content-Type': 'application/json', // Set the content type to JSON
+        'Content-Type': 'application/json',
       },
-      body: jsonData, // Send the JSON data as the request body
+      body: jsonData,
     );
 
     if (response.statusCode == 201) {
@@ -42,61 +41,75 @@ class _AddHostelState extends State<AddHostel> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text(
-          'Enter Hostel Name',
-          style: TextStyle(fontSize: 20),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add Hostel'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back when the back button is pressed
+          },
         ),
-        SizedBox(height: 10),
-        TextField(
-          controller: hostelNameController,
-          decoration: InputDecoration(
-            hintText: 'Hostel Name',
-          ),
-        ),
-        SizedBox(height: 10),
-        Row(
-          children: [
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Enter Hostel Name',
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 10),
+            TextField(
+              controller: hostelNameController,
+              decoration: InputDecoration(
+                hintText: 'Hostel Name',
+              ),
+            ),
+            SizedBox(height: 10),
             Row(
               children: [
-                Radio<String>(
-                  value: 'Male',
-                  groupValue: selectedValue,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedValue = value;
-                    });
-                  },
+                Row(
+                  children: [
+                    Radio<String>(
+                      value: 'Male',
+                      groupValue: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                    ),
+                    Text('Male'),
+                  ],
                 ),
-                Text('Male'),
+                Row(
+                  children: [
+                    Radio<String>(
+                      value: 'Female',
+                      groupValue: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                    ),
+                    Text('Female'),
+                  ],
+                ),
               ],
             ),
-            Row(
-              children: [
-                Radio<String>(
-                  value: 'Female',
-                  groupValue: selectedValue,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedValue = value;
-                    });
-                  },
-                ),
-                Text('Female'),
-              ],
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                debugPrint('Button !');
+                await insertHostel();
+              },
+              child: Text('Add Hostel'),
             ),
           ],
         ),
-        SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () async {
-            debugPrint('Button !');
-            await insertHostel();
-          },
-          child: Text('Add Hostel'),
-        ),
-      ],
+      ),
     );
   }
 }

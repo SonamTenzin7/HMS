@@ -53,12 +53,6 @@ class _AdmHomeState extends State<AdmHome> {
                   child: ListTile(
                     title: Text("Name: ${hostel.name}"),
                     subtitle: Text("Gender: ${hostel.gender}"),
-                    trailing: IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () {
-                        // Your edit logic here
-                      },
-                    ),
                   ),
                 );
               },
