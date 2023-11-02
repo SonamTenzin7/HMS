@@ -1,23 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:studentlogin/admin/admin_db.dart';
 import 'package:studentlogin/models/hostel.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:studentlogin/models/room.dart';
 
-class HostelDetail extends StatelessWidget {
+class HostelDetail extends StatefulWidget {
   final Hostel hostel;
 
   HostelDetail({required this.hostel});
 
   @override
+  _HostelDetailState createState() => _HostelDetailState();
+}
+
+class _HostelDetailState extends State<HostelDetail> {
+  List<Room> rooms = [];
+  AdminData adminData = AdminData();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRooms();
+  }
+
+  Future<void> _loadRooms() async {
+    final List<Room> roomsData = await adminData.retrieveRooms(widget.hostel.id!);
+    setState(() {
+      rooms = roomsData;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hostel ' + hostel.name),
+        title: Text('Hostel ' + widget.hostel.name),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.delete), // Icon for delete
+            icon: Icon(Icons.delete),
             onPressed: () {
-              deleteHostel(hostel.id, context);
+              _showConfirmationDialog(context);
             },
           ),
         ],
@@ -26,36 +47,62 @@ class HostelDetail extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Name: ${hostel.name}"),
-            Text("Gender: ${hostel.gender}"),
-            // Add more details about the hostel here
+            Text(
+              "List of Rooms:",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: rooms.length,
+                itemBuilder: (context, index) {
+                  final room = rooms[index]; // Use 'room' instead of 'rooms'
+                  return ListTile(
+                    title: Text("Room Number: ${room.roomno}"), // Use 'room.roomid'
+                    subtitle: Text("Capacity: ${room.capacity}"), // Use 'room.capacity'
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-  
-  Future<void> deleteHostel(int? hostelId, context ) async {
-    final Uri url = Uri.parse('http://10.2.28.201:3000/api/delhostel/$hostelId'); // Replace with your server URL and endpoint
 
-    try {
-      final response = await http.delete(url);
+  void _showConfirmationDialog(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Text('Are you sure you want to delete ${widget.hostel.name}? This action is irreversible.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () async {
+                final roomDeleted = await adminData.deleteRooms(widget.hostel.id, context);
 
-      if (response.statusCode == 200) {
-        // Hostel deleted successfully, you can navigate back to the previous screen or perform any other desired action.
-        Navigator.pop(context);
-      } else {
-        // Handle the case where the delete request was not successful
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to delete the hostel $hostelId'),
-          ),
+                if(roomDeleted){
+                   final deleted = await adminData.deleteHostel(widget.hostel.id, context);
+                if (deleted) {
+                  // Only pop the dialog and navigate back to the previous screen
+                  Navigator.of(context).pop();
+                  Navigator.pop(context, true);
+                } else {
+                  // Handle deletion failure if needed
+                }
+                }
+              },
+            ),
+          ],
         );
-      }
-    } catch (e) {
-      // Handle any errors that occur during the HTTP request
-      print('Error: $e');
-    }
+      },
+    );
   }
 }
-

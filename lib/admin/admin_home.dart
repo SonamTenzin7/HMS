@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 import 'package:studentlogin/admin/admin_hostel_add.dart';
 import 'package:studentlogin/admin/admin_hostel_detail.dart';
 import 'package:studentlogin/models/hostel.dart';
+import 'package:studentlogin/admin/admin_db.dart';
 
 class AdmHome extends StatefulWidget {
   @override
@@ -13,26 +13,27 @@ class AdmHome extends StatefulWidget {
 class _AdmHomeState extends State<AdmHome> {
   Future<List<Hostel>>? hostelData; // Change the type to nullable
 
-  @override
+@override
   void initState() {
     super.initState();
-    hostelData = fetchData();
+    _loadHostels();
   }
 
-  static Future<List<Hostel>> fetchData() async {
-    final Uri url = Uri.parse('http://10.2.28.201:3000/api/allhostels');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonData = json.decode(response.body);
-      List<Hostel> data = jsonData
-          .map((entry) => Hostel.fromJson(entry as Map<String, dynamic>))
-          .toList();
-      return data;
-    } else {
-      throw Exception('Failed to load data from the API');
-    }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Reload data when the screen is active
+    _loadHostels();
   }
+
+  Future<void> _loadHostels() async {
+    final admData = AdminData();
+    final data = await admData.retrieveHostels();
+    setState(() {
+      hostelData = Future.value(data);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class _AdmHomeState extends State<AdmHome> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data == null) {
-            return Center(child: Text('No data available.'));
+            return Center(child: Text('No hostels available.'));
           } else {
             List<Hostel> data = snapshot.data!;
             return ListView.builder(
@@ -78,7 +79,11 @@ class _AdmHomeState extends State<AdmHome> {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddHostel()), // Use 'AddHostel' widget
-          );
+          ).then((result) {
+            if (result == true) {
+            _loadHostels(); // Reload the data if the addition was successful
+        }
+      });
         },
         child: Icon(Icons.add),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:studentlogin/admin/admin_db.dart';
+
 
 class AddHostel extends StatefulWidget {
   @override
@@ -10,34 +10,7 @@ class AddHostel extends StatefulWidget {
 class _AddHostelState extends State<AddHostel> {
   String? selectedValue = 'M';
   final TextEditingController hostelNameController = TextEditingController();
-
-  Future<void> insertHostel() async {
-    final String name = hostelNameController.text;
-    final String gender = selectedValue!;
-
-    final String apiUrl = 'http://10.2.28.201:3000/api/addhostel';
-
-    final Map<String, dynamic> data = {
-      'name': name,
-      'gender': gender,
-    };
-
-    final String jsonData = jsonEncode(data);
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonData,
-    );
-
-    if (response.statusCode == 201) {
-      debugPrint('Hostel added successfully'+name+ " "+ gender);
-    } else {
-      debugPrint('Failed to add hostel. Status code: ${response.statusCode}');
-    }
-  }
+  AdminData adminData = AdminData();
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +70,8 @@ class _AddHostelState extends State<AddHostel> {
             ElevatedButton(
               onPressed: () async {
                 debugPrint('Button !');
-                await insertHostel();
+                await adminData.insertHostel(hostelNameController.text, selectedValue!);
+                Navigator.pop(context, true);
               },
               child: Text('Add Hostel'),
             ),
