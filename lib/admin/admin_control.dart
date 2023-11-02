@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/nav_bar.dart';
 import 'package:studentlogin/admin/admin_menu.dart';
 import 'package:studentlogin/admin/Maintence.dart';
-import 'package:studentlogin/admin/admin_add_hostel.dart';
+import 'package:studentlogin/admin/admin_hostel_add.dart';
 import 'package:studentlogin/admin/admin_home.dart';
 
 class AdmTab extends StatefulWidget {
@@ -34,7 +34,7 @@ class _AdmTabState extends State<AdmTab> with SingleTickerProviderStateMixin {
           MenuContent(),
           AdmHome(),
           HomePageWidget(),
-          AddHostel(),
+          HomePageWidget(),
         ],
       ),
     );

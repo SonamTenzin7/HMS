@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/Student/login.dart';
 import 'package:studentlogin/admin/admin_add_hostel.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:studentlogin/student/login.dart';
 
 class MenuContent extends StatelessWidget {
   @override
@@ -29,7 +29,7 @@ class MenuContent extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddHostel()),
+              MaterialPageRoute(builder: (context) => AddHostel()), // Use 'AddHostel' widget
             );
           },
           child: AnimatedContainer(
