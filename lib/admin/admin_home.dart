@@ -27,13 +27,21 @@ class _AdmHomeState extends State<AdmHome> {
   }
 
   Future<void> _loadHostels() async {
-    final admData = AdminData();
-    final data = await admData.retrieveHostels();
+  final admData = AdminData();
+  final data = await admData.retrieveHostels();
+
+  if (mounted) {
     setState(() {
       hostelData = Future.value(data);
     });
   }
-
+  }
+  
+  @override
+  void dispose() {
+    // Cleanup resources or cancel any ongoing operations here.
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +68,12 @@ class _AdmHomeState extends State<AdmHome> {
                       MaterialPageRoute(
                         builder: (context) => HostelDetail(hostel: hostel),
                       ),
-                    );
+                    ).then((result) {
+                      // Refresh the data when returning from HostelDetail
+                      if (result == true) {
+                        _loadHostels();
+                      }
+                    });
                   },
                   child: Card(
                     child: ListTile(

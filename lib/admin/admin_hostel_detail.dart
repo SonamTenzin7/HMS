@@ -75,7 +75,7 @@ class _HostelDetailState extends State<HostelDetail> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirm Deletion'),
-          content: Text('Are you sure you want to delete ${widget.hostel.name}? This action is irreversible.'),
+          content: Text('Are you sure you want to delete Hostel ${widget.hostel.name}? This action is irreversible.'),
           actions: <Widget>[
             TextButton(
               child: Text('Cancel'),

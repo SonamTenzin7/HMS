@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 
 class AdminData{
-  final String ip = "10.2.28.201";
+  final String ip = "localhost";
 
   Future<List<Hostel>> retrieveHostels() async {
     final Uri url = Uri.parse('http://$ip:3000/api/allhostels');
