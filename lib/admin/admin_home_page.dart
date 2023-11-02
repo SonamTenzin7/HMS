@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../Student/hostel.dart';
 
-class HomePageWidget extends StatelessWidget {
+class AdminHomePageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,43 +8,112 @@ class HomePageWidget extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFF1A08B7),
         automaticallyImplyLeading: false,
+        elevation: 2,
         actions: [],
         centerTitle: false,
-        elevation: 2,
       ),
       body: SafeArea(
-        top: true,
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center, // Center the children vertically.
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-              child: Container(
-                width: double.infinity,
-                height: 164,
-                child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/hostels');
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 164,
                   child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: Colors.blue,
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/hostels');
-                      },
-                      child: Center(
-                        child: Text(
-                          'Hostels',
-                          style: TextStyle(
-                            fontFamily: 'Readex Pro',
-                            fontSize: 40,
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            gradient: LinearGradient(
+                              colors: [Colors.blue, Colors.lightBlue],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.home,
+                                size: 64,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                'Hostels',
+                                style: TextStyle(
+                                  fontFamily: 'Readex Pro',
+                                  fontSize: 40,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+              child: Container(
+                width: double.infinity,
+                height: 164,
+                child: Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          gradient: LinearGradient(
+                            colors: [Colors.red, Colors.orange],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
                         ),
                       ),
-                    ),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.build,
+                              size: 64,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              'Maintenance',
+                              style: TextStyle(
+                                fontFamily: 'Readex Pro',
+                                fontSize: 40,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -55,49 +123,45 @@ class HomePageWidget extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 height: 164,
-                child: Center(
-                  child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: Colors.red,
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Maintenance',
-                        style: TextStyle(
-                          fontFamily: 'Readex Pro',
-                          fontSize: 40,
-                        ),
-                      ),
-                    ),
+                child: Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-              child: Container(
-                width: double.infinity,
-                height: 164,
-                child: Center(
-                  child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: Colors.green,
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Transfer',
-                        style: TextStyle(
-                          fontFamily: 'Readex Pro',
-                          fontSize: 40,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          gradient: LinearGradient(
+                            colors: [Colors.green, Colors.lightGreen],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                         ),
                       ),
-                    ),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.compare_arrows,
+                              size: 64,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              'Transfer',
+                              style: TextStyle(
+                                fontFamily: 'Readex Pro',
+                                fontSize: 40,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -107,16 +171,4 @@ class HomePageWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: HomePageWidget(),
-    themeMode: ThemeMode.system, // Set theme mode to system
-    theme: ThemeData.light(), // Light theme
-    darkTheme: ThemeData.dark(), // Dark theme
-    routes: {
-      '/hostels': (context) => HostelsWidget(),
-    },
-  ));
 }
