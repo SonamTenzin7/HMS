@@ -138,9 +138,3 @@ class _AddRoomWidgetState extends State<AddRoomWidget> {
     );
   }
 }
-
-void main() {
-  runApp(MaterialApp(
-    home: AddRoomWidget(),
-  ));
-}

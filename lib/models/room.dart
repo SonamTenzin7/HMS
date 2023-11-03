@@ -19,4 +19,13 @@ class Room{
       hid: json['hid'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'roomno': roomno,
+      'capacity': capacity,
+      'hid': hid,
+    };
+  }
 }

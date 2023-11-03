@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class viewHostel extends StatefulWidget{
   @override
   _viewHostelState createState() => _viewHostelState();
-
 }
 
 class _viewHostelState extends State<viewHostel>{

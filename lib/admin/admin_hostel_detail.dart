@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/admin_db.dart';
 import 'package:studentlogin/models/hostel.dart';
 import 'package:studentlogin/models/room.dart';
+import 'package:studentlogin/admin/addroom.dart';
 
 class HostelDetail extends StatefulWidget {
   final Hostel hostel;
@@ -65,6 +66,19 @@ class _HostelDetailState extends State<HostelDetail> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddRoomWidget()), // Use 'AddHostel' widget
+          ).then((result) {
+            if (result == true) {
+            (); // Reload the data if the addition was successful
+            }
+          });
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
