@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:studentlogin/admin/admin_add_hostel.dart';
+import 'package:studentlogin/admin/admin_hostel_add.dart';
 import 'package:studentlogin/student/login.dart';
 
 class MenuContent extends StatelessWidget {
@@ -9,37 +12,47 @@ class MenuContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         SizedBox(height: 30),
-        Icon(
-          Icons.person_2,
-          size: 40,
+        Hero(
+          tag: 'admin-icon',
+          child: Icon(
+            Icons.person,
+            size: 60,
+          ),
         ),
         Text(
           'Admin',
-          style: TextStyle(
-            fontSize: 18,
+          style: GoogleFonts.raleway(
+            fontSize: 24,
           ),
         ),
         SizedBox(height: 60),
         GestureDetector(
           onTap: () {
-            
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddHostel()), // Use 'AddHostel' widget
+            );
           },
-          child: Container(
-            width: 400, // Set the width of the Card
-            height: 100, // Set the height of the Card
+          child: AnimatedContainer(
+            duration: Duration(seconds: 1),
+            width: 400,
+            height: 100,
             child: Card(
-              color: Color.fromARGB(255, 156, 225, 255),
+              elevation: 8,
+              color: Colors.blue,
               child: Column(
                 children: [
                   SizedBox(height: 10),
                   Icon(
                     Icons.holiday_village,
-                    size: 30,
+                    size: 40,
+                    color: Colors.white,
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Add Hostel',
-                    style: TextStyle(fontSize: 18),
+                    style:
+                        GoogleFonts.raleway(fontSize: 20, color: Colors.white),
                   ),
                 ],
               ),
@@ -51,23 +64,26 @@ class MenuContent extends StatelessWidget {
           onTap: () {
             // Handle 'Request Room Change' logic here
           },
-          child: Container(
-            width: 400, // Set the width of the Card
-            height: 100, // Set the height of the Card
+          child: AnimatedContainer(
+            duration: Duration(seconds: 1),
+            width: 400,
+            height: 100,
             child: Card(
-              color: Color.fromARGB(255, 156, 225, 255),
+              elevation: 8,
+              color: Colors.blue,
               child: Column(
                 children: [
                   SizedBox(height: 10),
-                  Image.asset(
-                    'images/transfer.png',
-                    height: 30,
-                    width: 30,
+                  Icon(
+                    Icons.transfer_within_a_station,
+                    size: 40,
+                    color: Colors.white,
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Request Room Change',
-                    style: TextStyle(fontSize: 18),
+                    style:
+                        GoogleFonts.raleway(fontSize: 20, color: Colors.white),
                   ),
                 ],
               ),
@@ -79,13 +95,15 @@ class MenuContent extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Login()), // Use 'Login' widget
+              MaterialPageRoute(builder: (context) => Login()),
             );
           },
-          child: Container(
-            width: 400, // Set the width of the Card
-            height: 50, // Set the height of the Card
+          child: AnimatedContainer(
+            duration: Duration(seconds: 1),
+            width: 400,
+            height: 50,
             child: Card(
+              elevation: 8,
               color: Colors.grey,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -94,12 +112,14 @@ class MenuContent extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.logout,
-                      size: 20,
+                      size: 30,
+                      color: Colors.black,
                     ),
                     SizedBox(width: 10),
                     Text(
-                      'LogOut',
-                      style: TextStyle(fontSize: 18),
+                      'Log Out',
+                      style: GoogleFonts.raleway(
+                          fontSize: 18, color: Colors.black),
                     ),
                   ],
                 ),

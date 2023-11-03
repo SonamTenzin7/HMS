@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:studentlogin/Student/login.dart';
-//import 'package:studentlogin/inventory_list_page.dart';
 import 'package:studentlogin/Student/maintenance_request_page.dart';
 import 'package:studentlogin/Student/room_change_request_page.dart';
 
@@ -15,7 +14,19 @@ class StudentHomePage extends StatefulWidget {
 class _StudentHomePageState extends State<StudentHomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  ThemeMode _currentThemeMode = ThemeMode.system;
+  String maintenanceRequestMessage = '';
+
+  void updateMaintenanceRequestMessage(String message) {
+    setState(() {
+      maintenanceRequestMessage = message;
+    });
+  }
+
+  void deleteMessage() {
+    setState(() {
+      maintenanceRequestMessage = '';
+    });
+  }
 
   @override
   void initState() {
@@ -32,25 +43,15 @@ class _StudentHomePageState extends State<StudentHomePage>
   }
 
   bool isCardVisible = true;
+  bool isDarkThemeEnabled = false;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light().copyWith(
-        tabBarTheme: TabBarTheme(
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.grey,
-        ),
-      ),
-      darkTheme: ThemeData.dark().copyWith(
-        tabBarTheme: TabBarTheme(
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.grey,
-        ),
-      ),
-      themeMode: _currentThemeMode,
+      theme: isDarkThemeEnabled ? ThemeData.dark() : ThemeData.light(),
       home: Scaffold(
         appBar: AppBar(
+          title: Text('Student Dashboard'),
           bottom: TabBar(
             controller: _tabController,
             indicatorColor: Colors.white,
@@ -60,7 +61,7 @@ class _StudentHomePageState extends State<StudentHomePage>
                 text: 'Menu',
               ),
               Tab(
-                icon: Icon(FontAwesomeIcons.house),
+                icon: Icon(FontAwesomeIcons.home),
                 text: 'Home',
               ),
               Tab(
@@ -79,125 +80,113 @@ class _StudentHomePageState extends State<StudentHomePage>
           children: <Widget>[
             // Your content for the "Menu" tab
             Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              padding: EdgeInsets.all(16),
+              child: ListView(
                 children: <Widget>[
-                  SizedBox(height: 30),
-                  Icon(
-                    Icons.person_2,
-                    size: 40,
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.grey[300],
+                        child: Icon(
+                          Icons.person,
+                          size: 50,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Student Name',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Computer Science - Year 2',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Student Name',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                  SizedBox(height: 60),
-                  GestureDetector(
+                  SizedBox(height: 20),
+                  InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MaintenanceRequestPage()),
-                      );
-                    },
-                    child: Container(
-                      width: 400, // Set the width of the Card
-                      height: 100, // Set the height of the Card
-                      child: Card(
-                        color: Color.fromARGB(255, 156, 225, 255),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Icon(
-                              FontAwesomeIcons.wrench,
-                              size: 30,
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              'Maintenance Request',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RoomChangeRequestPage()),
-                      );
-                    },
-                    child: Container(
-                      width: 400, // Set the width of the Card
-                      height: 100, // Set the height of the Card
-                      child: Card(
-                        color: Color.fromARGB(255, 156, 225, 255),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Image.asset(
-                              'images/transfer.png',
-                              height: 30,
-                              width: 30,
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              'Request Room Change',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    },
-                    child: Container(
-                      width: 400, // Set the width of the Card
-                      height: 50, // Set the height of the Card
-                      child: Card(
-                        color: Colors.grey,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.logout,
-                                size: 20,
-                              ),
-                              SizedBox(width: 10),
-                              Text(
-                                'LogOut',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ],
+                          builder: (context) => MaintenanceRequestPage(
+                            onFormSubmit: updateMaintenanceRequestMessage,
                           ),
                         ),
-                      ),
+                      );
+                    },
+                    child: CardItem(
+                      icon: FontAwesomeIcons.wrench,
+                      title: 'Maintenance Request',
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RoomChangeRequestPage(),
+                        ),
+                      );
+                    },
+                    child: CardItem(
+                      icon: Icons.transfer_within_a_station,
+                      title: 'Request Room Change',
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ),
+                      );
+                    },
+                    child: CardItem(
+                      icon: Icons.logout,
+                      title: 'Log Out',
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ListTile(
+                    title: Text('Theme'),
+                    trailing: Switch(
+                      value: isDarkThemeEnabled,
+                      onChanged: (value) {
+                        // Add code here to toggle between dark and light themes
+                        // You can use a state management solution like Provider or setState.
+                        setState(() {
+                          isDarkThemeEnabled = value;
+                        });
+                      },
                     ),
                   ),
                 ],
               ),
             ),
+
             // Your content for the "House" tab
             Visibility(
               visible: isCardVisible,
               child: Card(
                 margin: EdgeInsets.all(16.0),
+                elevation: 4,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -211,53 +200,14 @@ class _StudentHomePageState extends State<StudentHomePage>
                         ),
                       ),
                       SizedBox(height: 10),
-                      Table(
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        children: [
-                          TableRow(
-                            children: [
-                              TableCell(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(child: Text('Hostel Name:')),
-                                ),
-                              ),
-                              TableCell(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('Your Hostel Name'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              TableCell(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(child: Text('Room Number:')),
-                                ),
-                              ),
-                              TableCell(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('Your Room Number'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          // Add more rows for room details as needed
-                        ],
-                        border: TableBorder.all(
-                          color: Colors.black,
-                          width: 2.0,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
+                      RoomDetailsRow(
+                          title: 'Hostel Name', value: 'Your Hostel Name'),
+                      RoomDetailsRow(
+                          title: 'Room Number', value: 'Your Room Number'),
+                      // Add more room details rows as needed
                       Divider(
                         height: 30,
-                        thickness: 5,
+                        thickness: 1,
                       ),
                       Text(
                         'Room Members',
@@ -274,52 +224,78 @@ class _StudentHomePageState extends State<StudentHomePage>
                           TableRow(
                             children: [
                               TableCell(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('Name'),
-                                ),
+                                child: Text('Name'),
                               ),
                               TableCell(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('Department'),
-                                ),
+                                child: Text('Department'),
                               ),
                               TableCell(
-                                child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Year')),
+                                child: Text('Year'),
                               ),
                             ],
                           ),
                           TableRow(
                             children: [
                               TableCell(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(''),
-                                ),
+                                child: Text('Student 1'),
                               ),
                               TableCell(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(''),
-                                ),
+                                child: Text('Computer Science'),
                               ),
                               TableCell(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(''),
-                                ),
+                                child: Text('Year 2'),
                               ),
                             ],
                           ),
-                          // Add more rows for room members as needed
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Text('Student 2'),
+                              ),
+                              TableCell(
+                                child: Text('Electrical Engineering'),
+                              ),
+                              TableCell(
+                                child: Text('Year 3'),
+                              ),
+                            ],
+                          ),
+                          // Add more room members as needed
                         ],
-                        border: TableBorder.all(
-                          color: Colors.black,
-                          width: 2.0,
-                          style: BorderStyle.solid,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            /// Your content for the "Wrench" tab
+            Container(
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "Maintenance Request:\n$maintenanceRequestMessage",
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: deleteMessage,
+                                  // Add your delete logic here
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -327,12 +303,7 @@ class _StudentHomePageState extends State<StudentHomePage>
                 ),
               ),
             ),
-            // Your content for the "Wrench" tab
-            Container(
-              child: Center(
-                child: Text("Wrench Content"),
-              ),
-            ),
+
             // Your content for the "Notifications" tab
             Container(
               child: Center(
@@ -342,6 +313,66 @@ class _StudentHomePageState extends State<StudentHomePage>
           ],
         ),
       ),
+    );
+  }
+}
+
+class CardItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+
+  CardItem({
+    required this.icon,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4,
+      child: ListTile(
+        leading: Icon(
+          icon,
+          size: 40,
+          color: Colors.blue,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
+    );
+  }
+}
+
+class RoomDetailsRow extends StatelessWidget {
+  final String title;
+  final String value;
+
+  RoomDetailsRow({
+    required this.title,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+      ],
     );
   }
 }
