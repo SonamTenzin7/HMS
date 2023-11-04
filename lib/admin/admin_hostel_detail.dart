@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/admin_db.dart';
+import 'package:studentlogin/admin/admin_room_add.dart';
 import 'package:studentlogin/models/hostel.dart';
 import 'package:studentlogin/models/room.dart';
 
@@ -74,14 +75,23 @@ class _HostelDetailState extends State<HostelDetail> {
                     });
                   },
                 ),
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              if (value == 'add') {
-                // Add your logic for adding a new room here
-              } else if (value == 'delete') {
-                _showConfirmationDialog(context);
-              }
-            },
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                if (value == 'add') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddRoom(hostelId: widget.hostel.id!),
+                    ),
+                  ).then((result){
+                    if (result == true) {
+                      _loadRooms();
+                    }   
+                  });
+                } else if (value == 'delete') {
+                  _showConfirmationDialog(context);
+                }
+              },
             itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem<String>(
@@ -148,11 +158,11 @@ class _HostelDetailState extends State<HostelDetail> {
                 if (roomDeleted){
                    final deleted = await adminData.deleteHostel(widget.hostel.id, context);
                 if (deleted) {
-                  // Only pop the dialog and navigate back to the previous screen
+
                   Navigator.of(context).pop();
                   Navigator.pop(context, true);
                 } else {
-                  // Handle deletion failure if needed
+
                 }
               }
             }

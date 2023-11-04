@@ -69,7 +69,6 @@ class _AddHostelState extends State<AddHostel> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                debugPrint('Button !');
                 await adminData.insertHostel(hostelNameController.text, selectedValue!);
                 Navigator.pop(context, true);
               },

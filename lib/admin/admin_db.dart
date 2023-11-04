@@ -114,4 +114,35 @@ class AdminData{
     return false;
   }
   }
+
+  
+  Future<bool> insertRoom(int no, int cap, int hid) async {
+    final int roomno = no;
+    final int capacity = cap;
+    final String apiUrl = 'http://$ip:3000/api/addroom';
+
+    final Map<String, dynamic> data = {
+      'roomno': roomno,
+      'capacity': capacity,
+      'hid' : hid
+    };
+
+    final String jsonData = jsonEncode(data);
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonData,
+    );
+
+    if (response.statusCode == 201) {
+      debugPrint('Room Added');
+      return true;
+    } else {
+      debugPrint('Failed to add room. Status code: ${response.statusCode}');
+      return !true;
+    }
+  }
 }
