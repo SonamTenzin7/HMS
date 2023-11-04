@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:studentlogin/admin/admin_add_hostel.dart';
 import 'package:studentlogin/admin/admin_hostel_add.dart';
 import 'package:studentlogin/student/login.dart';
 

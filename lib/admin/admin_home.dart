@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:studentlogin/admin/admin_hostel_add.dart';
 import 'package:studentlogin/admin/admin_hostel_detail.dart';
 import 'package:studentlogin/models/hostel.dart';
 import 'package:studentlogin/admin/admin_db.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AdmHome extends StatefulWidget {
   @override
@@ -11,9 +11,9 @@ class AdmHome extends StatefulWidget {
 }
 
 class _AdmHomeState extends State<AdmHome> {
-  Future<List<Hostel>>? hostelData; // Change the type to nullable
+  Future<List<Hostel>>? hostelData;
 
-@override
+  @override
   void initState() {
     super.initState();
     _loadHostels();
@@ -27,16 +27,16 @@ class _AdmHomeState extends State<AdmHome> {
   }
 
   Future<void> _loadHostels() async {
-  final admData = AdminData();
-  final data = await admData.retrieveHostels();
+    final admData = AdminData();
+    final data = await admData.retrieveHostels();
 
-  if (mounted) {
-    setState(() {
-      hostelData = Future.value(data);
-    });
+    if (mounted) {
+      setState(() {
+        hostelData = Future.value(data);
+      });
+    }
   }
-  }
-  
+
   @override
   void dispose() {
     // Cleanup resources or cancel any ongoing operations here.
@@ -61,6 +61,18 @@ class _AdmHomeState extends State<AdmHome> {
               itemCount: data.length,
               itemBuilder: (context, index) {
                 final hostel = data[index];
+                // Define a variable to hold the gender icon
+                Icon genderIcon;
+
+                if (hostel.gender == 'Male') {
+                  genderIcon = Icon(FontAwesomeIcons.mars, color: Colors.blue); // Male icon
+                } else if (hostel.gender == 'Female') {
+                  genderIcon = Icon(FontAwesomeIcons.venus, color: Colors.pink); // Female icon
+                } else {
+                  genderIcon = Icon(FontAwesomeIcons.mars, color: Colors.grey); // Default icon if gender is not specified
+                }
+
+
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -78,7 +90,12 @@ class _AdmHomeState extends State<AdmHome> {
                   child: Card(
                     child: ListTile(
                       title: Text("Name: ${hostel.name}"),
-                      subtitle: Text("Gender: ${hostel.gender}"),
+                      subtitle: Row(
+                        children: [
+                          genderIcon,
+                          Text("${hostel.gender}"),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -91,12 +108,12 @@ class _AdmHomeState extends State<AdmHome> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddHostel()), // Use 'AddHostel' widget
+            MaterialPageRoute(builder: (context) => AddHostel()),
           ).then((result) {
             if (result == true) {
-            _loadHostels(); // Reload the data if the addition was successful
-        }
-      });
+              _loadHostels();
+            }
+          });
         },
         child: Icon(Icons.add),
       ),

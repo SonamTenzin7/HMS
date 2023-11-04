@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/admin_db.dart';
 import 'package:studentlogin/models/hostel.dart';
 import 'package:studentlogin/models/room.dart';
-import 'package:studentlogin/admin/addroom.dart';
 
 class HostelDetail extends StatefulWidget {
   final Hostel hostel;
@@ -15,7 +14,10 @@ class HostelDetail extends StatefulWidget {
 
 class _HostelDetailState extends State<HostelDetail> {
   List<Room> rooms = [];
+  List<Room> filteredRooms = [];
   AdminData adminData = AdminData();
+  bool isSearching = false;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -27,19 +29,70 @@ class _HostelDetailState extends State<HostelDetail> {
     final List<Room> roomsData = await adminData.retrieveRooms(widget.hostel.id!);
     setState(() {
       rooms = roomsData;
+      filteredRooms = roomsData;
     });
+  }
+
+  void filterRooms(String searchText) {
+    filteredRooms = rooms.where((room) {
+      return room.roomno.toString().toLowerCase().contains(searchText.toLowerCase());
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hostel ' + widget.hostel.name),
+        title: isSearching
+            ? TextField(
+                controller: searchController,
+                decoration: InputDecoration(hintText: 'Search'),
+                onChanged: (text) {
+                  setState(() {
+                    filterRooms(text);
+                  });
+                },
+              )
+            : Text('Hostel ' + widget.hostel.name),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              _showConfirmationDialog(context);
+          isSearching
+              ? IconButton(
+                  icon: Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      isSearching = false;
+                      searchController.clear();
+                      filteredRooms = rooms;
+                    });
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      isSearching = true;
+                    });
+                  },
+                ),
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'add') {
+                // Add your logic for adding a new room here
+              } else if (value == 'delete') {
+                _showConfirmationDialog(context);
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<String>(
+                  value: 'add',
+                  child: Text('Add Room'),
+                ),
+                PopupMenuItem<String>(
+                  value: 'delete',
+                  child: Text('Delete'),
+                ),
+              ];
             },
           ),
         ],
@@ -48,37 +101,27 @@ class _HostelDetailState extends State<HostelDetail> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "List of Rooms:",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
             Expanded(
-              child: ListView.builder(
-                itemCount: rooms.length,
-                itemBuilder: (context, index) {
-                  final room = rooms[index]; // Use 'room' instead of 'rooms'
-                  return ListTile(
-                    title: Text("Room Number: ${room.roomno}"), // Use 'room.roomid'
-                    subtitle: Text("Capacity: ${room.capacity}"), // Use 'room.capacity'
-                  );
-                },
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: DataTable(
+                  columns: [
+                    DataColumn(label: Text('Room Number')),
+                    DataColumn(label: Text('Capacity')),
+                  ],
+                  rows: filteredRooms.map((room) {
+                    return DataRow(
+                      cells: [
+                        DataCell(Text(room.roomno.toString())),
+                        DataCell(Text(room.capacity.toString())),
+                      ],
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddRoomWidget()), // Use 'AddHostel' widget
-          ).then((result) {
-            if (result == true) {
-            (); // Reload the data if the addition was successful
-            }
-          });
-        },
-        child: Icon(Icons.add),
       ),
     );
   }
@@ -102,7 +145,7 @@ class _HostelDetailState extends State<HostelDetail> {
               onPressed: () async {
                 final roomDeleted = await adminData.deleteRooms(widget.hostel.id, context);
 
-                if(roomDeleted){
+                if (roomDeleted){
                    final deleted = await adminData.deleteHostel(widget.hostel.id, context);
                 if (deleted) {
                   // Only pop the dialog and navigate back to the previous screen
@@ -111,9 +154,9 @@ class _HostelDetailState extends State<HostelDetail> {
                 } else {
                   // Handle deletion failure if needed
                 }
-                }
-              },
-            ),
+              }
+            }
+            )
           ],
         );
       },
