@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/admin_db.dart';
+import 'package:flutter/services.dart';
 
 class AddRoom extends StatefulWidget {
   final int hostelId;
@@ -35,6 +36,10 @@ class _AddRoomState extends State<AddRoom> {
               decoration: InputDecoration(
                 hintText: 'Room Number',
               ),
+              keyboardType: TextInputType.number, // Set the keyboard type to numeric
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly, // Allow only digits
+              ],
             ),
             SizedBox(height: 20),
             Text(
@@ -47,6 +52,10 @@ class _AddRoomState extends State<AddRoom> {
               decoration: InputDecoration(
                 hintText: 'Capacity',
               ),
+              keyboardType: TextInputType.number, // Set the keyboard type to numeric
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly, // Allow only digits
+              ],
             ),
             SizedBox(height: 20),
             ElevatedButton(

@@ -89,7 +89,7 @@ class _HostelDetailState extends State<HostelDetail> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditHostel(hostel: widget.hostel),
+                      builder: (context) => AddRoom(hostelId: widget.hostel.id!),
                     ),
                   ).then((result) {
                     if (result == true) {
@@ -142,12 +142,21 @@ class _HostelDetailState extends State<HostelDetail> {
                   columns: [
                     DataColumn(label: Text('Room Number')),
                     DataColumn(label: Text('Capacity')),
+                    DataColumn(label: Text('Actions')),
                   ],
                   rows: filteredRooms.map((room) {
                     return DataRow(
                       cells: [
                         DataCell(Text(room.roomno.toString())),
                         DataCell(Text(room.capacity.toString())),
+                        DataCell(
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _showDeleteConfirmationDialog(context, room);
+                            },
+                          ),
+                        ),
                       ],
                     );
                   }).toList(),
@@ -190,6 +199,39 @@ class _HostelDetailState extends State<HostelDetail> {
                 }
               }
             }
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  
+  void _showDeleteConfirmationDialog(BuildContext context, Room room) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Text('Are you sure you want to delete Room ${room.roomno}? This action is irreversible.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () async {
+                final roomDeleted = await adminData.deleteRoom(room.id!, widget.hostel.id!, context);
+                if (roomDeleted) {
+                  setState(() {
+                    filteredRooms.remove(room);
+                  });
+                  Navigator.of(context).pop();
+                }
+              },
             )
           ],
         );

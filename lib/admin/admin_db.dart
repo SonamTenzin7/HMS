@@ -165,38 +165,62 @@ class AdminData{
   }
 
   Future<bool> updateHostel(int id, String newname, String newgen, context) async {
+    try {
+      final String apiUrl = 'http://$ip:3000/api/updatehostel/$id'; // Replace with your server URL and endpoint
+
+      final Map<String, dynamic> data = {
+        'name': newname,
+        'gender': newgen
+      };
+
+      final String jsonData = jsonEncode(data);
+
+      final response = await http.put(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonData,
+      );
+
+      if (response.statusCode == 200) {
+        debugPrint('Hostel updated successfully');
+        return true;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to update the hostel: Status code ${response.statusCode}'),
+          ),
+        );
+        return false; // Return false to indicate the operation failed.
+      }
+    } catch (e) {
+      // Handle any errors that occur during the HTTP request
+      print('Error in updateHostel: $e');
+      return false;
+    }
+  }
+
+  Future<bool> deleteRoom(int rid, int hid, context) async {
+  final String apiUrl = 'http://$ip:3000/api/delroom?rid=$rid&hid=$hid';
+
   try {
-    final String apiUrl = 'http://$ip:3000/api/updatehostel/$id'; // Replace with your server URL and endpoint
-
-    final Map<String, dynamic> data = {
-      'name': newname,
-      'gender': newgen
-    };
-
-    final String jsonData = jsonEncode(data);
-
-    final response = await http.put(
-      Uri.parse(apiUrl),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonData,
-    );
+    final response = await http.delete(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
-      debugPrint('Hostel updated successfully');
+      // Room deletion was successful
       return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to update the hostel: Status code ${response.statusCode}'),
-        ),
-      );
-      return false; // Return false to indicate the operation failed.
+          SnackBar(
+            content: Text('Failed to update the hostel: Status code ${response.statusCode}'),
+          ),
+        );
+      return false;
     }
-  } catch (e) {
-    // Handle any errors that occur during the HTTP request
-    print('Error in updateHostel: $e');
+  } catch (error) {
+    // Handle network or other errors
+    // You can also show an error message here
     return false;
   }
 }
