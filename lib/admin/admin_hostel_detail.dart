@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/admin/admin_db.dart';
+import 'package:studentlogin/admin/database_operations.dart';
 import 'package:studentlogin/admin/admin_hostel_edit.dart';
 import 'package:studentlogin/admin/admin_room_add.dart';
 import 'package:studentlogin/models/hostel.dart';

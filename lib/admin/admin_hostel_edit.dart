@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/models/hostel.dart';
-import 'admin_db.dart';
+import 'database_operations.dart';
 
 class EditHostel extends StatefulWidget {
   final Hostel hostel;

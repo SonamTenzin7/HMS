@@ -58,10 +58,8 @@ class AdminData{
     final response = await http.delete(url);
 
     if (response.statusCode == 200) {
-      // Hostel deleted successfully
       return true;
     } else {
-      // Handle the case where the delete request was not successful
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to delete the hostel $hostelId'),
@@ -70,7 +68,6 @@ class AdminData{
       return false;
     }
   } catch (e) {
-    // Handle any errors that occur during the HTTP request
     print('Error: $e');
     return false;
     }
