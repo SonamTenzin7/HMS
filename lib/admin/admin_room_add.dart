@@ -57,7 +57,7 @@ class _AddRoomState extends State<AddRoom> {
                 
                 if (roomNumber.isNotEmpty && capacity.isNotEmpty) {
                   // Call the function to add the room to the database
-                  bool roomAdded = await adminData.insertRoom(int.parse(roomNumber), int.parse(capacity), widget.hostelId);
+                  bool roomAdded = await adminData.insertRoom(int.parse(roomNumber), int.parse(capacity), widget.hostelId, context);
                   
                   if (roomAdded) {
                     Navigator.pop(context, true); // Return to the previous screen

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/admin_db.dart';
+import 'package:studentlogin/admin/admin_hostel_edit.dart';
 import 'package:studentlogin/admin/admin_room_add.dart';
 import 'package:studentlogin/models/hostel.dart';
 import 'package:studentlogin/models/room.dart';
@@ -40,6 +41,12 @@ class _HostelDetailState extends State<HostelDetail> {
     }).toList();
   }
 
+  void updateHostelData() async {
+  setState(() {
+    // Trigger a rebuild of the widget to reflect the updated data
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,21 +82,34 @@ class _HostelDetailState extends State<HostelDetail> {
                     });
                   },
                 ),
+
             PopupMenuButton<String>(
               onSelected: (value) {
                 if (value == 'add') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddRoom(hostelId: widget.hostel.id!),
+                      builder: (context) => EditHostel(hostel: widget.hostel),
                     ),
-                  ).then((result){
+                  ).then((result) {
                     if (result == true) {
-                      _loadRooms();
-                    }   
+                      _loadRooms(); // Call the method to update the data
+                    }
                   });
                 } else if (value == 'delete') {
                   _showConfirmationDialog(context);
+                }
+                else if (value == 'edit') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditHostel(hostel: widget.hostel), // Pass the hostel data
+                    ),
+                  ).then((result){
+                    if (result == true) {
+                      updateHostelData();
+                    }
+                  });
                 }
               },
             itemBuilder: (BuildContext context) {
@@ -100,7 +120,11 @@ class _HostelDetailState extends State<HostelDetail> {
                 ),
                 PopupMenuItem<String>(
                   value: 'delete',
-                  child: Text('Delete'),
+                  child: Text('Delete Hostel'),
+                ),
+                PopupMenuItem<String>(
+                  value: 'edit',
+                  child: Text('Edit Hostel'),
                 ),
               ];
             },
