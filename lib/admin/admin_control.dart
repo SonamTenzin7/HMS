@@ -3,6 +3,7 @@ import 'package:studentlogin/admin/nav_bar.dart';
 import 'package:studentlogin/admin/admin_menu.dart';
 import 'package:studentlogin/admin/Maintence.dart';
 import 'package:studentlogin/admin/admin_home.dart';
+import 'admin_counsellor.dart';
 
 class AdmTab extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class _AdmTabState extends State<AdmTab> with SingleTickerProviderStateMixin {
         children: <Widget>[ 
           MenuContent(),
           AdmHome(),
-          HomePageWidget(),
+          CounsellorTab(),
           HomePageWidget(),
         ],
       ),

@@ -1,12 +1,12 @@
 import 'package:studentlogin/models/hostel.dart';
 import 'package:studentlogin/models/room.dart';
+import 'package:studentlogin/models/student.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
-
 class AdminData{
-  final String ip = "10.2.28.201";
+  final String ip = "10.2.8.79";
 
   Future<List<Hostel>> retrieveHostels() async {
     final Uri url = Uri.parse('http://$ip:3000/api/allhostels');
@@ -22,7 +22,20 @@ class AdminData{
       throw Exception('Failed to load data from the API');
     }
   }
-  
+
+  Future<Hostel> retrieveHostel(int hid) async {
+    final Uri url = Uri.parse('http://$ip:3000/api/hostel/$hid');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final dynamic jsonData = json.decode(response.body);
+      Hostel hostel = Hostel.fromJson(jsonData[0]);
+      return hostel;
+    } else {
+      throw Exception('Failed to load data from the API');
+    }
+  }
+
   Future<void> insertHostel(String n, String g) async {
     final String name = n;
     final String gender = g;
@@ -199,26 +212,125 @@ class AdminData{
   }
 
   Future<bool> deleteRoom(int rid, int hid, context) async {
-  final String apiUrl = 'http://$ip:3000/api/delroom?rid=$rid&hid=$hid';
+    final String apiUrl = 'http://$ip:3000/api/delroom?rid=$rid&hid=$hid';
 
-  try {
-    final response = await http.delete(Uri.parse(apiUrl));
+    try {
+      final response = await http.delete(Uri.parse(apiUrl));
 
-    if (response.statusCode == 200) {
-      // Room deletion was successful
-      return true;
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to update the hostel: Status code ${response.statusCode}'),
-          ),
-        );
+      if (response.statusCode == 200) {
+        // Room deletion was successful
+        return true;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Failed to update the hostel: Status code ${response.statusCode}'),
+            ),
+          );
+        return false;
+      }
+    } catch (error) {
+      // Handle network or other errors
+      // You can also show an error message here
       return false;
     }
-  } catch (error) {
-    // Handle network or other errors
-    // You can also show an error message here
-    return false;
+  }
+
+  Future<List<Student>> retrieveCounsellors() async {
+    final Uri url = Uri.parse('http://$ip:3000/api/allcounsellors');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+
+      List<Student> data = jsonData
+          .map((entry) => Student.fromJson(entry as Map<String, dynamic>))
+          .toList();
+      return data;
+    } else {
+      throw Exception('Failed to load data from the API. Status code: ${response.statusCode}');
+    }
+  }
+
+  Future<bool> deleteCounsellor(String stuId) async {
+    final Uri url = Uri.parse('http://$ip:3000/api/delcounsellor/$stuId'); // Replace with your server URL and endpoint
+    try {
+      final response = await http.delete(url);
+
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Error: $e');
+      return false;
+      }
+  }
+
+  
+  Future<List<Student>> retrieveStudents() async {
+    final Uri url = Uri.parse('http://$ip:3000/api/allstudents');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+
+      List<Student> data = jsonData
+          .map((entry) => Student.fromJson(entry as Map<String, dynamic>))
+          .toList();
+      return data;
+    } else {
+      throw Exception('Failed to load data from the API. Status code: ${response.statusCode}');
+    }
+  }
+
+  Future<bool> insertCounsellor(int hid, String sid, context) async {
+    try {
+
+      final String apiUrl = 'http://$ip:3000/api/addcounsellor';
+
+      final Map<String, dynamic> data = {
+        'hid': hid,
+        'sid': sid
+      };
+
+      final String jsonData = jsonEncode(data);
+
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonData,
+      );
+
+      if (response.statusCode == 201) {
+        debugPrint('Counesellor Added');
+        return true;
+      } else if(response.statusCode == 409){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Duplicate Counsellor entry'),
+          ),
+        );
+        return false; // Return false to indicate the operation failed.
+      } else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(response.toString()),
+          ),
+        );
+        return false;
+      }
+    } catch (e) {
+      // Handle the exception here, such as logging the error and status code.
+      print('Error in insertRoom: $e');
+      if (e is http.Response) {
+        print('Status code: ${e.statusCode}');
+      }
+      return false; // Return false to indicate the operation failed.
+    }
   }
 }
-}
+
+

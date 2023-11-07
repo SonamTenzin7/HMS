@@ -21,8 +21,8 @@ class CustomTabBar extends StatelessWidget {
           text: 'Hostel',
         ),
         Tab(
-          icon: Icon(FontAwesomeIcons.wrench),
-          text: 'Maintenance',
+          icon: Icon(FontAwesomeIcons.peopleGroup),
+          text: 'Counsellor',
         ),
         Tab(
           icon: Icon(Icons.holiday_village),
