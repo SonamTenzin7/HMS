@@ -14,7 +14,7 @@ class BlockCounsellorHomePage extends StatefulWidget {
 }
 
 class _BlockCounsellorHomePageState extends State<BlockCounsellorHomePage>
-    with SingleTickerProviderStateMixin {
+  with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String maintenanceRequestMessage = '';
 

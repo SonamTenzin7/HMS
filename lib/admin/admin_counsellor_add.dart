@@ -6,10 +6,10 @@ import 'database_operations.dart';
 
 class AddCounselor extends StatefulWidget {
   @override
-  _AddCounselorState createState() => _AddCounselorState();
+  AddCounselorState createState() => AddCounselorState();
 }
 
-class _AddCounselorState extends State<AddCounselor> {
+class AddCounselorState extends State<AddCounselor> {
   String? selectedStudentId;
   String? selectedHostelName;
   int? selectedHostelId;

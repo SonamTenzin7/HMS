@@ -22,7 +22,6 @@ class _AdmHomeState extends State<AdmHome> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Reload data when the screen is active
     _loadHostels();
   }
 
@@ -39,70 +38,71 @@ class _AdmHomeState extends State<AdmHome> {
 
   @override
   void dispose() {
-    // Cleanup resources or cancel any ongoing operations here.
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<Hostel>>(
-        future: hostelData,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data == null) {
-            return Center(child: Text('No hostels available.'));
-          } else {
-            List<Hostel> data = snapshot.data!;
-            return ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                final hostel = data[index];
-                // Define a variable to hold the gender icon
-                Icon genderIcon;
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 1200), // Adjust the maximum width as needed
+          child: FutureBuilder<List<Hostel>>(
+            future: hostelData,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (!snapshot.hasData || snapshot.data == null) {
+                return Text('No hostels available.');
+              } else {
+                List<Hostel> data = snapshot.data!;
+                return ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    final hostel = data[index];
+                    Icon genderIcon;
 
-                if (hostel.gender == 'Male') {
-                  genderIcon = Icon(FontAwesomeIcons.mars, color: Colors.blue); // Male icon
-                } else if (hostel.gender == 'Female') {
-                  genderIcon = Icon(FontAwesomeIcons.venus, color: Colors.pink); // Female icon
-                } else {
-                  genderIcon = Icon(FontAwesomeIcons.mars, color: Colors.grey); // Default icon if gender is not specified
-                }
+                    if (hostel.gender == 'Male') {
+                      genderIcon = Icon(FontAwesomeIcons.mars, color: Colors.blue);
+                    } else if (hostel.gender == 'Female') {
+                      genderIcon = Icon(FontAwesomeIcons.venus, color: Colors.pink);
+                    } else {
+                      genderIcon = Icon(FontAwesomeIcons.mars, color: Colors.grey);
+                    }
 
-
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HostelDetail(hostel: hostel),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HostelDetail(hostel: hostel),
+                          ),
+                        ).then((result) {
+                          if (result == true) {
+                            _loadHostels();
+                          }
+                        });
+                      },
+                      child: Card(
+                        child: ListTile(
+                          title: Text("Hostel ${hostel.name}"),
+                          subtitle: Row(
+                            children: [
+                              genderIcon,
+                              Text("${hostel.gender}"),
+                            ],
+                          ),
+                        ),
                       ),
-                    ).then((result) {
-                      // Refresh the data when returning from HostelDetail
-                      if (result == true) {
-                        _loadHostels();
-                      }
-                    });
+                    );
                   },
-                  child: Card(
-                    child: ListTile(
-                      title: Text("Name: ${hostel.name}"),
-                      subtitle: Row(
-                        children: [
-                          genderIcon,
-                          Text("${hostel.gender}"),
-                        ],
-                      ),
-                    ),
-                  ),
                 );
-              },
-            );
-          }
-        },
+              }
+            },
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class AdminData{
-  final String ip = "10.2.8.79";
+  final String ip = "192.168.223.28";
 
   Future<List<Hostel>> retrieveHostels() async {
     final Uri url = Uri.parse('http://$ip:3000/api/allhostels');
@@ -291,7 +291,7 @@ class AdminData{
 
       final Map<String, dynamic> data = {
         'hid': hid,
-        'sid': sid
+        'sid': sid,
       };
 
       final String jsonData = jsonEncode(data);
@@ -329,6 +329,22 @@ class AdminData{
         print('Status code: ${e.statusCode}');
       }
       return false; // Return false to indicate the operation failed.
+    }
+  }
+
+  Future<List<Hostel>> retrieveHostelnC() async {
+    final Uri url = Uri.parse('http://$ip:3000/api/gethosncoun');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+
+      List<Hostel> data = jsonData
+          .map((entry) => Hostel.fromJson(entry as Map<String, dynamic>))
+          .toList();
+      return data;
+    } else {
+      throw Exception('Failed to load data from the API. Status code: ${response.statusCode}');
     }
   }
 }
