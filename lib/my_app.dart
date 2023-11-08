@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/Student/login.dart';
-
+import 'package:studentlogin/admin/admin_control.dart';
+import '../Student/hostel.dart';
+import '../sso/sso_tabs.dart';
 void main() {
   runApp(const MyApp());
 }

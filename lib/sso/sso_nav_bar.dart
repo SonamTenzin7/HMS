@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CustomTabBar extends StatelessWidget {
-  final TabController tabController;
+class Navbar extends StatelessWidget {
+  final TabController tabControls;
 
-  CustomTabBar({required this.tabController});
+  Navbar({required this.tabControls});
 
   @override
   Widget build(BuildContext context) {
     return TabBar(
-      controller: tabController,
+      controller: tabControls,
       indicatorColor: Colors.white,
       tabs: <Widget>[
         Tab(
@@ -21,13 +21,13 @@ class CustomTabBar extends StatelessWidget {
           text: 'Hostel',
         ),
         Tab(
-          icon: Icon(FontAwesomeIcons.peopleGroup),
-          text: 'Counsellor',
+          icon: Icon(FontAwesomeIcons.bell),
+          text: 'Notifications',
         ),
-        Tab(
-          icon: Icon(Icons.holiday_village),
-          text: 'Add Hostel',
-        ),
+        // Tab(
+        //   icon: Icon(Icons.holiday_village),
+        //   text: 'Add Hostel',
+        // ),
       ],
     );
   }

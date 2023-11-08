@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/admin/admin_db.dart';
+import 'package:studentlogin/admin/database_operations.dart';
+import 'package:studentlogin/admin/admin_hostel_edit.dart';
+import 'package:studentlogin/admin/admin_room_add.dart';
 import 'package:studentlogin/models/hostel.dart';
 import 'package:studentlogin/models/room.dart';
 
@@ -14,7 +16,10 @@ class HostelDetail extends StatefulWidget {
 
 class _HostelDetailState extends State<HostelDetail> {
   List<Room> rooms = [];
+  List<Room> filteredRooms = [];
   AdminData adminData = AdminData();
+  bool isSearching = false;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -26,19 +31,102 @@ class _HostelDetailState extends State<HostelDetail> {
     final List<Room> roomsData = await adminData.retrieveRooms(widget.hostel.id!);
     setState(() {
       rooms = roomsData;
+      filteredRooms = roomsData;
     });
   }
+
+  void filterRooms(String searchText) {
+    filteredRooms = rooms.where((room) {
+      return room.roomno.toString().toLowerCase().contains(searchText.toLowerCase());
+    }).toList();
+  }
+
+  void updateHostelData() async {
+  setState(() {
+    // Trigger a rebuild of the widget to reflect the updated data
+  });
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hostel ' + widget.hostel.name),
+        title: isSearching
+            ? TextField(
+                controller: searchController,
+                decoration: InputDecoration(hintText: 'Search'),
+                onChanged: (text) {
+                  setState(() {
+                    filterRooms(text);
+                  });
+                },
+              )
+            : Text('Hostel ' + widget.hostel.name),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              _showConfirmationDialog(context);
+          isSearching
+              ? IconButton(
+                  icon: Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      isSearching = false;
+                      searchController.clear();
+                      filteredRooms = rooms;
+                    });
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      isSearching = true;
+                    });
+                  },
+                ),
+
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                if (value == 'add') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddRoom(hostelId: widget.hostel.id!),
+                    ),
+                  ).then((result) {
+                    if (result == true) {
+                      _loadRooms(); // Call the method to update the data
+                    }
+                  });
+                } else if (value == 'delete') {
+                  _showConfirmationDialog(context);
+                }
+                else if (value == 'edit') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditHostel(hostel: widget.hostel), // Pass the hostel data
+                    ),
+                  ).then((result){
+                    if (result == true) {
+                      updateHostelData();
+                    }
+                  });
+                }
+              },
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<String>(
+                  value: 'add',
+                  child: Text('Add Room'),
+                ),
+                PopupMenuItem<String>(
+                  value: 'delete',
+                  child: Text('Delete Hostel'),
+                ),
+                PopupMenuItem<String>(
+                  value: 'edit',
+                  child: Text('Edit Hostel'),
+                ),
+              ];
             },
           ),
         ],
@@ -47,20 +135,32 @@ class _HostelDetailState extends State<HostelDetail> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "List of Rooms:",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
             Expanded(
-              child: ListView.builder(
-                itemCount: rooms.length,
-                itemBuilder: (context, index) {
-                  final room = rooms[index]; // Use 'room' instead of 'rooms'
-                  return ListTile(
-                    title: Text("Room Number: ${room.roomno}"), // Use 'room.roomid'
-                    subtitle: Text("Capacity: ${room.capacity}"), // Use 'room.capacity'
-                  );
-                },
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: DataTable(
+                  columns: [
+                    DataColumn(label: Text('Room Number')),
+                    DataColumn(label: Text('Capacity')),
+                    DataColumn(label: Text('Actions')),
+                  ],
+                  rows: filteredRooms.map((room) {
+                    return DataRow(
+                      cells: [
+                        DataCell(Text(room.roomno.toString())),
+                        DataCell(Text(room.capacity.toString())),
+                        DataCell(
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _showDeleteConfirmationDialog(context, room);
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ],
@@ -75,7 +175,7 @@ class _HostelDetailState extends State<HostelDetail> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirm Deletion'),
-          content: Text('Are you sure you want to delete ${widget.hostel.name}? This action is irreversible.'),
+          content: Text('Are you sure you want to delete Hostel ${widget.hostel.name}? This action is irreversible.'),
           actions: <Widget>[
             TextButton(
               child: Text('Cancel'),
@@ -88,18 +188,51 @@ class _HostelDetailState extends State<HostelDetail> {
               onPressed: () async {
                 final roomDeleted = await adminData.deleteRooms(widget.hostel.id, context);
 
-                if(roomDeleted){
+                if (roomDeleted){
                    final deleted = await adminData.deleteHostel(widget.hostel.id, context);
                 if (deleted) {
-                  // Only pop the dialog and navigate back to the previous screen
+
                   Navigator.of(context).pop();
                   Navigator.pop(context, true);
                 } else {
-                  // Handle deletion failure if needed
+
                 }
-                }
+              }
+            }
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  
+  void _showDeleteConfirmationDialog(BuildContext context, Room room) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Deletion'),
+          content: Text('Are you sure you want to delete Room ${room.roomno}? This action is irreversible.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
               },
             ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () async {
+                final roomDeleted = await adminData.deleteRoom(room.id!, widget.hostel.id!, context);
+                if (roomDeleted) {
+                  setState(() {
+                    filteredRooms.remove(room);
+                  });
+                  Navigator.of(context).pop();
+                }
+              },
+            )
           ],
         );
       },

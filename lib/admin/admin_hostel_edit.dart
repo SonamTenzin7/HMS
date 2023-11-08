@@ -1,29 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/admin/database_operations.dart';
+import 'package:studentlogin/models/hostel.dart';
+import 'database_operations.dart';
 
+class EditHostel extends StatefulWidget {
+  final Hostel hostel;
 
-class AddHostel extends StatefulWidget {
+  EditHostel({required this.hostel});
+
   @override
-  _AddHostelState createState() => _AddHostelState();
+  _EditHostelState createState() => _EditHostelState();
 }
 
-class _AddHostelState extends State<AddHostel> {
-  String? selectedValue = 'M';
-  final TextEditingController hostelNameController = TextEditingController();
+
+class _EditHostelState extends State<EditHostel> {
+  String? selectedValue;
+  late TextEditingController hostelNameController;
   AdminData adminData = AdminData();
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the controller with the existing hostel name
+    hostelNameController = TextEditingController(text: widget.hostel.name);
+
+    // Initialize the selectedValue with the existing hostel type
+    selectedValue = widget.hostel.gender;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Hostel'),
+        title: Text('Edit Hostel'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             Text(
-              'Enter Hostel Name',
+              'Edit Hostel Name',
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 10),
@@ -69,10 +84,17 @@ class _AddHostelState extends State<AddHostel> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await adminData.insertHostel(hostelNameController.text, selectedValue!);
-                Navigator.pop(context, true);
+                // Update the hostel data in your database with the new values
+                await adminData.updateHostel(
+                  widget.hostel.id!,
+                  hostelNameController.text,
+                  selectedValue!,
+                  context
+                );
+                Navigator.of(context).pop();
+                Navigator.of(context).pop(true); // Pass true to indicate a successful update
               },
-              child: Text('Add Hostel'),
+              child: Text('Edit Hostel'),
             ),
           ],
         ),
