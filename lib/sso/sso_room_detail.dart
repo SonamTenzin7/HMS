@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:studentlogin/models/room.dart';
 import 'package:studentlogin/models/student.dart';
 import 'package:studentlogin/db/database_operations.dart';
-
+ 
 class RoomDetailsScreen extends StatefulWidget {
   final Room room;
+  final String hostelName;
   final AdminData adminData = AdminData();
 
-  RoomDetailsScreen({required this.room});
+  RoomDetailsScreen({required this.room, required this.hostelName});
 
   @override
   _RoomDetailsScreenState createState() => _RoomDetailsScreenState();
@@ -34,7 +35,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Room Details'),
+        title: Text('Hostel ${widget.hostelName} - ${widget.room.roomno}'),
       ),
       body: FutureBuilder<List<Student>>(
         future: students,
@@ -64,7 +65,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                       DataColumn(label: Text('Name')),
                       DataColumn(label: Text('Department')),
                       DataColumn(label: Text('Year')),
-                      DataColumn(label: Text('Gender')),
                     ],
                     rows: data.map((student) {
                       final fullName = '${student.fname} ${student.mname} ${student.lname}';
@@ -73,7 +73,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                         DataCell(Text(fullName)),
                         DataCell(Text(student.dept)),
                         DataCell(Text(student.year)),
-                        DataCell(Text(student.gender)),
                       ]);
                     }).toList(),
                   ),

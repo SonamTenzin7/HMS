@@ -21,8 +21,8 @@ class Navbar extends StatelessWidget {
           text: 'Hostel',
         ),
         Tab(
-          icon: Icon(FontAwesomeIcons.bell),
-          text: 'Notifications',
+          icon: Icon(FontAwesomeIcons.warehouse),
+          text: 'Rooms',
         ),
         // Tab(
         //   icon: Icon(Icons.holiday_village),

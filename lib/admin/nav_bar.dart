@@ -8,27 +8,36 @@ class CustomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabBar(
-      controller: tabController,
-      indicatorColor: Colors.white,
-      tabs: <Widget>[
-        Tab(
-          icon: Icon(FontAwesomeIcons.bars),
-          text: 'Menu',
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: TabBar(
+        controller: tabController,
+        indicator: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          color: const Color.fromARGB(255, 16, 142, 245),
         ),
-        Tab(
-          icon: Icon(FontAwesomeIcons.house),
-          text: 'Hostel',
-        ),
-        Tab(
-          icon: Icon(FontAwesomeIcons.peopleGroup),
-          text: 'Counsellor',
-        ),
-        Tab(
-          icon: Icon(Icons.holiday_village),
-          text: 'Add Hostel',
-        ),
-      ],
+        tabs: <Widget>[
+          Tab(
+            icon: Icon(FontAwesomeIcons.bars),
+            text: 'Menu',
+          ),
+          Tab(
+            icon: Icon(FontAwesomeIcons.house),
+            text: 'Hostel',
+          ),
+          Tab(
+            icon: Icon(FontAwesomeIcons.peopleGroup),
+            text: 'Counsellor',
+          ),
+          Tab(
+            icon: Icon(Icons.holiday_village),
+            text: 'SSO',
+          ),
+        ],
+      ),
     );
   }
 }

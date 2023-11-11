@@ -97,7 +97,9 @@ class _HostelinDetailState extends State<HostelinDetail> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => RoomDetailsScreen(room: room),
+                                builder: (context) => RoomDetailsScreen(
+                                  room: room,
+                                  hostelName: widget.hostel.name),
                               ),
                             );
                           },

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/sso/sso_menu.dart';
-import 'package:studentlogin/admin/Maintence.dart';
+import 'sso_rooms.dart';
 import 'sso_hostel.dart';
 import 'package:studentlogin/sso/sso_nav_bar.dart';
 
@@ -33,7 +33,7 @@ class _SsoTabState extends State<SsoTab> with SingleTickerProviderStateMixin {
         children: <Widget>[
           MenuContent(),
           SsoHostel(),
-          HomePageWidget(),
+          Rooms(),
         ],
       ),
     );

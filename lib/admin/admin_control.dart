@@ -23,6 +23,7 @@ class _AdmTabState extends State<AdmTab> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: CustomTabBar(tabController: _tabController),
