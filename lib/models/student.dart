@@ -8,8 +8,7 @@ class Student{
   final String password;
   final String gender;
   final int? hosId;
-  final int? roomNo;
-  final String? hostelName;
+  final int? rId;
 
   Student({
     required this.id,
@@ -21,8 +20,7 @@ class Student{
     required this.password,
     required this.gender,
     this.hosId,
-    this.roomNo,
-    this.hostelName,
+    this.rId,
   });
 
    factory Student.fromJson(Map<String, dynamic> json) {
@@ -36,8 +34,7 @@ class Student{
       password: json['password'],
       gender: json['Gender'],
       hosId: json['hosId'],
-      roomNo: json['roomno'],
-      hostelName: json['name']
+      rId: json['rid'],
     );
   }
 }

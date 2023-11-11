@@ -86,7 +86,22 @@ class AdminData{
     }
   }
 
-  Future<List<Room>> retrieveRooms(int? hid) async{
+  Future<List<Room>> retrieveRooms() async{
+    final Uri url = Uri.parse('http://$ip:3000/api/allrooms');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+      List<Room> data = jsonData
+          .map((entry) => Room.fromJson(entry as Map<String, dynamic>))
+          .toList();
+      return data;
+    } else {
+      throw Exception('Failed to load data from the API');
+    }
+  }
+
+  Future<List<Room>> retrieveRoomsByHostel(int? hid) async{
     final Uri url = Uri.parse('http://$ip:3000/api/allrooms/$hid');
     final response = await http.get(url);
 
@@ -349,7 +364,7 @@ class AdminData{
   }
 
   Future<List<Student>> retrieveRoomDetail(int id) async{
-    final Uri url = Uri.parse("http://$ip:3000/api/getroomdetails/$id");
+    final Uri url = Uri.parse("http://$ip:3000/api/getroomdetails/$id"); 
     final response = await http.get(url);
 
     if(response.statusCode == 200){
@@ -357,6 +372,22 @@ class AdminData{
       
       List<Student> studentslist = jsonData
         .map((entry) => Student.fromJson(entry as Map<String, dynamic>))
+        .toList();
+      return studentslist;
+    } else {
+      throw Exception('Failed to load students in the room.');
+    }
+  }
+
+  Future<List<Room>> retrieveAllotee() async{
+    final Uri url = Uri.parse("http://$ip:3000/api/getallotee");
+    final response = await http.get(url);
+
+    if(response.statusCode == 200){
+      final List<dynamic> jsonData = json.decode(response.body);
+      
+      List<Room> studentslist = jsonData
+        .map((entry) => Room.fromJson(entry as Map<String, dynamic>))
         .toList();
       return studentslist;
     } else {

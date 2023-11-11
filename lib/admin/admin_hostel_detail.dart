@@ -28,7 +28,7 @@ class _HostelDetailState extends State<HostelDetail> {
   }
 
   Future<void> _loadRooms() async {
-    final List<Room> roomsData = await adminData.retrieveRooms(widget.hostel.id!);
+    final List<Room> roomsData = await adminData.retrieveRoomsByHostel(widget.hostel.id!);
     setState(() {
       rooms = roomsData;
       filteredRooms = roomsData;

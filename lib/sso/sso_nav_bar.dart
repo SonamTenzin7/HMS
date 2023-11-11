@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Navbar extends StatelessWidget {
   final TabController tabControls;
@@ -13,21 +12,14 @@ class Navbar extends StatelessWidget {
       indicatorColor: Colors.white,
       tabs: <Widget>[
         Tab(
-          icon: Icon(FontAwesomeIcons.bars),
-          text: 'Menu',
+          icon: Icon(Icons.menu),
         ),
         Tab(
-          icon: Icon(FontAwesomeIcons.house),
-          text: 'Hostel',
+          icon: Icon(Icons.apartment),
         ),
         Tab(
-          icon: Icon(FontAwesomeIcons.warehouse),
-          text: 'Rooms',
+          icon: Icon(Icons.hotel),
         ),
-        // Tab(
-        //   icon: Icon(Icons.holiday_village),
-        //   text: 'Add Hostel',
-        // ),
       ],
     );
   }

@@ -78,7 +78,6 @@ class _SsoHostelState extends State<SsoHostel> {
                         builder: (context) => HostelinDetail(hostel: hostel),
                       ),
                     ).then((result) {
-                      // Refresh the data when returning from HostelDetail
                       if (result == true) {
                         _loadHostels();
                       }
