@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studentlogin/admin/database_operations.dart';
+import 'package:studentlogin/db/database_operations.dart';
 
 
 class AddHostel extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/admin_counsellor_add.dart';
 import 'package:studentlogin/models/student.dart';
 import 'package:studentlogin/models/hostel.dart';
-import 'database_operations.dart';
+import '../db/database_operations.dart';
 import 'admin_counsellor_detail.dart';
 
 class CounsellorTab extends StatefulWidget {

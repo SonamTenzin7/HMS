@@ -347,6 +347,20 @@ class AdminData{
       throw Exception('Failed to load data from the API. Status code: ${response.statusCode}');
     }
   }
+
+  Future<List<Student>> retrieveRoomDetail(int id) async{
+    final Uri url = Uri.parse("http://$ip:3000/api/getroomdetails/$id");
+    final response = await http.get(url);
+
+    if(response.statusCode == 200){
+      final List<dynamic> jsonData = json.decode(response.body);
+      
+      List<Student> studentslist = jsonData
+        .map((entry) => Student.fromJson(entry as Map<String, dynamic>))
+        .toList();
+      return studentslist;
+    } else {
+      throw Exception('Failed to load students in the room.');
+    }
+  }
 }
-
-

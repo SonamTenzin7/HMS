@@ -19,7 +19,7 @@ class MenuContent extends StatelessWidget {
           ),
         ),
         Text(
-          'Admin',
+          'SSO',
           style: GoogleFonts.raleway(
             fontSize: 24,
           ),
@@ -49,7 +49,7 @@ class MenuContent extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Add Hostel',
+                    'Allocate Room',
                     style:
                         GoogleFonts.raleway(fontSize: 20, color: Colors.white),
                   ),

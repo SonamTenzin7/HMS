@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/student.dart';
 import '../models/hostel.dart';
-import 'database_operations.dart';
+import '../db/database_operations.dart';
 
 class CounDetail extends StatefulWidget {
   final Student counsellor;

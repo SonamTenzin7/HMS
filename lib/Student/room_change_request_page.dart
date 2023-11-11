@@ -10,8 +10,8 @@ class RoomChangeRequestPage extends StatefulWidget {
 class _RoomChangeRequestPageState extends State<RoomChangeRequestPage> {
   final _formKey = GlobalKey<FormState>();
   final String _reason = '';
-  String _newHostel = 'Hostel B'; // Default value for the new hostel
-  String _presentHostel = 'Hostel A'; // Default value for present hostel
+  String _newHostel = 'Hostel B';
+  String _presentHostel = 'Hostel A';
   bool _isSubmitted = false;
 
   @override

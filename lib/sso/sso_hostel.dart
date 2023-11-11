@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:studentlogin/admin/admin_hostel_detail.dart';
 import 'package:studentlogin/models/hostel.dart';
-import 'package:studentlogin/admin/database_operations.dart';
+import 'package:studentlogin/db/database_operations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:studentlogin/sso/sso_hostel_detail.dart';
 
 class SsoHostel extends StatefulWidget {
   @override
@@ -75,7 +75,7 @@ class _SsoHostelState extends State<SsoHostel> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HostelDetail(hostel: hostel),
+                        builder: (context) => HostelinDetail(hostel: hostel),
                       ),
                     ).then((result) {
                       // Refresh the data when returning from HostelDetail

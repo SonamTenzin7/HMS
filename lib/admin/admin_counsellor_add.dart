@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import '../models/student.dart';
 import '../models/hostel.dart';
-import 'database_operations.dart';
+import '../db/database_operations.dart';
 
 class AddCounselor extends StatefulWidget {
   @override

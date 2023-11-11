@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/admin_hostel_add.dart';
 import 'package:studentlogin/admin/admin_hostel_detail.dart';
 import 'package:studentlogin/models/hostel.dart';
-import 'package:studentlogin/admin/database_operations.dart';
+import 'package:studentlogin/db/database_operations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AdmHome extends StatefulWidget {
