@@ -15,6 +15,7 @@ class _AllocateState extends State<Allocate>{
   String? selectedHostelName;
   int? selectedHostelId;
   int? selectedRoomId;
+  int? selectedRoomNo;
   final admData = AdminData();
   final GlobalKey<AutoCompleteTextFieldState<Student>> studentKey = GlobalKey();
 
@@ -237,7 +238,7 @@ class _AllocateState extends State<Allocate>{
                     },
                     items: filteredRooms.map((room) {
                       return DropdownMenuItem<int>(
-                        value: room.roomno,
+                        value: room.id,
                         child: Text('Room ${room.roomno}'),
                       );
                     }).toList(),
@@ -251,9 +252,15 @@ class _AllocateState extends State<Allocate>{
 
             ElevatedButton(
               onPressed: () async{
-
+                final success = await admData.insertAllocation(selectedRoomId!, selectedStudentId!, context);
+                if(success){
+                  setState(() {
+                    
+                  });
+                }
+                debugPrint("${selectedRoomId} ${selectedRoomNo} ${selectedStudentId}");               
               },
-              child: Text('Confirm'),
+              child: Text('Assign'),
             ),
           ],
         ),

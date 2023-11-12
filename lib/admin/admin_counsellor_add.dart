@@ -145,9 +145,7 @@ class AddCounselorState extends State<AddCounselor> {
                 labelText: 'Year',
               ),
             ),
-
             SizedBox(height: 16),
-
             TextFormField(
               controller: selectedStudentGenController,
               enabled: false,
@@ -155,8 +153,6 @@ class AddCounselorState extends State<AddCounselor> {
                 labelText: 'Gender',
               ),
             ),
-
-            
 
             FutureBuilder<List<Hostel>>(
               future: hostels,

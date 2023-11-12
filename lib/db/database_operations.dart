@@ -394,4 +394,55 @@ class AdminData{
       throw Exception('Failed to load students in the room.');
     }
   }
+
+  Future<bool> insertAllocation(int rid, String sid, context) async {
+    try {
+
+      final String apiUrl = 'http://$ip:3000/api/addallocation';
+
+      final Map<String, dynamic> data = {
+        'rid': rid,
+        'sid': sid,
+      };
+
+      final String jsonData = jsonEncode(data);
+
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonData,
+      );
+
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Assigned Successfully!'),
+          ),
+        );
+        return true;
+      } else if(response.statusCode == 409){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Duplicate entry'),
+          ),
+        );
+        return false;
+      } else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(response.toString()),
+          ),
+        );
+        return false;
+      }
+    } catch (e) {
+      print('Error in insertRoom: $e');
+      if (e is http.Response) {
+        print('Status code: ${e.statusCode}');
+      }
+      return false;
+    }
+  }
 }
