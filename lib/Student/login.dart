@@ -4,8 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:studentlogin/Student/bc_home_page.dart';
 import 'package:studentlogin/Student/student_home_page.dart';
 import 'package:studentlogin/admin/admin_control.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class Login extends StatefulWidget {
-  const Login({super.key});
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -22,36 +27,28 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void _handleLogin() {
+  void _handleLogin() async {
     final String enteredEmail = emailController.text;
     final String enteredPassword = passwordController.text;
+
     
-   final String counsellorEmail = '2';
-   final String counsellorPassword = '23';
+    final String apiUrl = 'http://10.2.28.201:3000/login';
 
-   final String studentEmail = '1';
-   final String studentPassword = '12';
-
-    final String email2 = '2';
-    final String password2 = '21';
-
-    if (enteredEmail == studentEmail && enteredPassword == studentPassword) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => StudentHomePage()),
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'username': enteredEmail, 'password': enteredPassword}),
       );
-    }
-    else if(enteredEmail == email2 && enteredPassword == password2){
-        Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => AdmTab()),
-        );
-    }
-    else if(enteredEmail == counsellorEmail && enteredPassword == counsellorPassword) {
-        Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => BlockCounsellorHomePage()),
-        );
-    }
-    else {
-      print('Login failed: Invalid email or password');
+
+      if (response.statusCode == 200) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => StudentHomePage(studentId: emailController.text)));
+      } else {
+        // Login failed
+        print('Login failed: ${response.body}');
+      }
+    } catch (error) {
+      print('Error in login: $error');
     }
   }
 

@@ -76,30 +76,71 @@ class _StateRooms extends State<Rooms> {
                       _filterRooms(snapshot.data!, searchController.text);
                   return SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      columns: [
-                        DataColumn(label: Text('Room Number')),
-                        DataColumn(label: Text('Hostel')),
-                        DataColumn(label: Text('Student ID')),
-                        DataColumn(label: Text('Name')),
-                        DataColumn(label: Text('Deptartment')),
-                        DataColumn(label: Text('Year')),
-                        DataColumn(label: Text('Gender')),
-                      ],
-                      rows: filteredRooms.map((student) {
-                        return DataRow(
-                          cells: [
-                            DataCell(Text('${student.roomno}')),
-                            DataCell(Text('${student.hname}')),
-                            DataCell(Text('${student.sid ?? ""}')),
-                            DataCell(Text(
-                                '${student.fname ?? ""} ${student.mname ?? ""} ${student.lname ?? ""}')),
-                            DataCell(Text('${student.dept ?? ""}')),
-                            DataCell(Text('${student.year ?? ""}')),
-                            DataCell(Text('${student.gender ?? ""}')),
-                          ],
-                        );
-                      }).toList(),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: DataTable(
+                        columns: [
+                          DataColumn(label: Text('Room Number')),
+                          DataColumn(label: Text('Hostel')),
+                          DataColumn(label: Text('Student ID')),
+                          DataColumn(label: Text('Name')),
+                          DataColumn(label: Text('Deptartment')),
+                          DataColumn(label: Text('Year')),
+                          DataColumn(label: Text('Gender')),
+                        ],
+                        rows: filteredRooms.map((student) {
+                          return DataRow(
+                            cells: [
+                              DataCell(InkWell(
+                                onTap: () { 
+                                  print('Tapped on room ${student.roomno}');
+                                },
+                                child: Text('${student.roomno}'),
+                              )),
+                              DataCell(InkWell(
+                                onTap: () {
+                                  print('Tapped on hostel ${student.hname}');
+                                },
+                                child: Text('${student.hname}'),
+                              )),
+                              DataCell(InkWell(
+                                onTap: () {
+                                  print('Tapped on student ID ${student.sid ?? ""}');
+                                },
+                                child: Text('${student.sid ?? ""}'),
+                              )),
+                              DataCell(InkWell(
+                                onTap: () {
+                                  print('Tapped on name ${student.fname ?? ""} ${student.mname ?? ""} ${student.lname ?? ""}');
+                                },
+                                child: Text(
+                                    '${student.fname ?? ""} ${student.mname ?? ""} ${student.lname ?? ""}'),
+                              )),
+                              DataCell(InkWell(
+                                onTap: () {
+                                  // Handle tap on the row
+                                  print('Tapped on department ${student.dept ?? ""}');
+                                },
+                                child: Text('${student.dept ?? ""}'),
+                              )),
+                              DataCell(InkWell(
+                                onTap: () {
+                                  // Handle tap on the row
+                                  print('Tapped on year ${student.year ?? ""}');
+                                },
+                                child: Text('${student.year ?? ""}'),
+                              )),
+                              DataCell(InkWell(
+                                onTap: () {
+                                  // Handle tap on the row
+                                  print('Tapped on gender ${student.gender ?? ""}');
+                                },
+                                child: Text('${student.gender ?? ""}'),
+                              )),
+                            ],
+                          );
+                        }).toList(),
+                      ),
                     ),
                   );
                 }

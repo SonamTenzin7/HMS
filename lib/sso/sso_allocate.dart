@@ -64,15 +64,17 @@ class _AllocateState extends State<Allocate>{
   
   
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Allocate Room'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
             FutureBuilder<List<Student>>(
               future: students,
               builder: (context, snapshot) {
@@ -265,6 +267,7 @@ class _AllocateState extends State<Allocate>{
           ],
         ),
       ),
+    ),
     );
   }
 }

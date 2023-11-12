@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class AdminData{
   final String ip = "10.2.28.201";
+  
 
   Future<List<Hostel>> retrieveHostels() async {
     final Uri url = Uri.parse('http://$ip:3000/api/allhostels');
@@ -124,7 +125,7 @@ class AdminData{
       if (response.statusCode == 200) {
         return true;
       } else {
-        // Handle the case where the delete request was not successful
+        
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Failed to delete the rooms of $hid'),
@@ -133,7 +134,7 @@ class AdminData{
         return false;
       }
     } catch (e) {
-      // Handle any errors that occur during the HTTP request
+      
       print('Error: $e');
       return false;
     }
@@ -220,7 +221,6 @@ class AdminData{
         return false; // Return false to indicate the operation failed.
       }
     } catch (e) {
-      // Handle any errors that occur during the HTTP request
       print('Error in updateHostel: $e');
       return false;
     }
@@ -233,7 +233,6 @@ class AdminData{
       final response = await http.delete(Uri.parse(apiUrl));
 
       if (response.statusCode == 200) {
-        // Room deletion was successful
         return true;
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -244,8 +243,6 @@ class AdminData{
         return false;
       }
     } catch (error) {
-      // Handle network or other errors
-      // You can also show an error message here
       return false;
     }
   }
@@ -443,6 +440,42 @@ class AdminData{
         print('Status code: ${e.statusCode}');
       }
       return false;
+    }
+  }
+
+  Future<Student> getStudent(String id) async {
+  final Uri url = Uri.parse("http://$ip:3000/api/getstudent/$id");
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final List<dynamic> jsonData = json.decode(response.body);
+
+    if (jsonData.isNotEmpty) {
+      // Assuming you want the first student in the list
+      Student student = Student.fromJson(jsonData.first as Map<String, dynamic>);
+      return student;
+    } else {
+      throw Exception('No student data found for ID: $id');
+    }
+    } else {
+    throw Exception('Failed to load student data.');
+    }
+  }
+
+  Future<Room> getRoomDetailsByStudent(String id) async {
+  final Uri url = Uri.parse("http://$ip:3000/api/getroom/$id");
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final List<dynamic> jsonData = json.decode(response.body);
+    if (jsonData.isNotEmpty) {
+      Room room = Room.fromJson(jsonData.first as Map<String, dynamic>);
+      return room;
+    } else {
+      throw Exception('No student data found for ID: $id');
+    }
+    } else {
+    throw Exception('Failed to load room data.');
     }
   }
 }
