@@ -6,8 +6,12 @@ import '../models/student.dart';
 
 class StudentMenu extends StatefulWidget {
   final studentId;
+  final VoidCallback? onMaintenanceRequestTap; // Define the callback
 
-  const StudentMenu({required this.studentId});
+  const StudentMenu({
+    required this.studentId,
+    this.onMaintenanceRequestTap,
+  });
 
   _StudentMenuState createState() => _StudentMenuState();
 }
@@ -26,20 +30,20 @@ class _StudentMenuState extends State<StudentMenu> {
   }
 
   void fetchStudentData() async {
-  try {
-    student = adm.getStudent(widget.studentId);
-  
-    Student studentData = await student;
-    
-    setState(() {
-      studentName = '${studentData.fname} ${studentData.mname ?? ''} ${studentData.lname ?? ''}';
-      department = studentData.dept;
-      year = studentData.year;
-    });
-  } catch (error) {
-    print('Error fetching student data: $error');
+    try {
+      student = adm.getStudent(widget.studentId);
+
+      Student studentData = await student;
+
+      setState(() {
+        studentName = '${studentData.fname} ${studentData.mname ?? ''} ${studentData.lname ?? ''}';
+        department = studentData.dept;
+        year = studentData.year;
+      });
+    } catch (error) {
+      print('Error fetching student data: $error');
+    }
   }
-}
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,13 +91,25 @@ class _StudentMenuState extends State<StudentMenu> {
           SizedBox(height: 20),
           InkWell(
             onTap: () {
-              // Add logic for Maintenance Request
+            },
+            child: CardItem(
+              icon: Icons.home,
+              title: 'Hostel',
+            ),
+          ),
+          SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              if (widget.onMaintenanceRequestTap != null) {
+                widget.onMaintenanceRequestTap!(); // Call the callback to navigate to the "Maintenance Request" tab
+              }
             },
             child: CardItem(
               icon: FontAwesomeIcons.wrench,
               title: 'Maintenance Request',
             ),
           ),
+
           SizedBox(height: 10),
           InkWell(
             onTap: () {
@@ -125,6 +141,7 @@ class _StudentMenuState extends State<StudentMenu> {
     );
   }
 }
+
 
 class CardItem extends StatelessWidget {
   final IconData icon;

@@ -7,6 +7,7 @@ class StudentHostel extends StatefulWidget {
 
   const StudentHostel({required this.studentId});
 
+  @override
   _StudentHostelState createState() => _StudentHostelState();
 }
 
@@ -20,143 +21,107 @@ class _StudentHostelState extends State<StudentHostel> {
   @override
   void initState() {
     super.initState();
-    // Fetch student room details and room members when the widget is initialized
     fetchRoomDetails();
   }
 
   void fetchRoomDetails() async {
-  try {
-    // Assuming you have a method getRoomDetailsByStudent in your DatabaseOperations class
-    final roomDetails = await adm.getRoomDetailsByStudent(widget.studentId);
+    try {
+      final roomDetails = await adm.getRoomDetailsByStudent(widget.studentId);
 
-    setState(() {
-      hostelName = roomDetails.hname ?? '';
-      roomNumber = roomDetails.roomno.toString();
-    });
+      setState(() {
+        hostelName = roomDetails.hname ?? 'Unassigned';
+        roomNumber = roomDetails.roomno.toString();
+      });
 
-    // Fetch students in the room
-    final studentsInRoom = await adm.retrieveRoomDetail(roomDetails.id!);
+      final studentsInRoom = await adm.retrieveRoomDetail(roomDetails.id!);
 
-    print(roomDetails.id ); // Add this line to print the result
-
-    setState(() {
-      roomMembers = studentsInRoom;
-    });
-  } catch (error) {
-    print('Error fetching room details: $error');
-    // Handle error as needed
+      setState(() {
+        roomMembers = studentsInRoom;
+      });
+    } catch (error) {
+      setState(() {
+        hostelName = 'Unassigned';
+      });
+      print('Error fetching room details: $error');
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Visibility(
-        child: Card(
-          margin: EdgeInsets.all(16.0),
-          elevation: 4,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
                 Text(
-                  'Room Details',
+                  'Hostel Name:',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 10),
-                RoomDetailsRow(
-                  title: 'Hostel Name',
-                  value: hostelName,
-                ),
-                RoomDetailsRow(
-                  title: 'Room Number',
-                  value: roomNumber,
-                ),
-                Divider(
-                  height: 30,
-                  thickness: 1,
-                ),
+                SizedBox(width: 10), // Add spacing between text and value
                 Text(
-                  'Room Members',
+                  hostelName,
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
-                ),
-                SizedBox(height: 10),
-                Table(
-                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  children: [
-                    TableRow(
-                      children: [
-                        TableCell(
-                          child: Text('Name'),
-                        ),
-                        TableCell(
-                          child: Text('Department'),
-                        ),
-                        TableCell(
-                          child: Text('Year'),
-                        ),
-                      ],
-                    ),
-                    for (var student in roomMembers)
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: Text('${student.fname} ${student.mname} ${student.lname}'),
-                          ),
-                          TableCell(
-                            child: Text(student.dept),
-                          ),
-                          TableCell(
-                            child: Text(student.year),
-                          ),
-                        ],
-                      ),
-                  ],
                 ),
               ],
             ),
-          ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Text(
+                  'Room Number:',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 10), // Add spacing between text and value
+                Text(
+                  roomNumber,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
+            Divider(
+              height: 30,
+              thickness: 1,
+            ),
+            Text(
+              'Room Members',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            DataTable(
+              columns: [
+                DataColumn(label: Text('Name')),
+                DataColumn(label: Text('Department')),
+                DataColumn(label: Text('Year')),
+              ],
+              rows: roomMembers
+                  .map((student) => DataRow(
+                        cells: [
+                          DataCell(Text('${student.fname} ${student.mname} ${student.lname}')),
+                          DataCell(Text(student.dept)),
+                          DataCell(Text(student.year)),
+                        ],
+                      ))
+                  .toList(),
+            ),
+          ],
         ),
       ),
-    );
-  }
-}
-
-class RoomDetailsRow extends StatelessWidget {
-  final String title;
-  final String value;
-
-  RoomDetailsRow({
-    required this.title,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 18,
-          ),
-        ),
-      ],
     );
   }
 }

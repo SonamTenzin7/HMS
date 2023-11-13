@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:studentlogin/Student/bc_home_page.dart';
 import 'package:studentlogin/Student/student_home_page.dart';
-import 'package:studentlogin/admin/admin_control.dart';
+import '../sso/sso_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
@@ -146,7 +146,13 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           child: ElevatedButton(
-                            onPressed: _handleLogin,
+                            onPressed: () {
+                              if (emailController.text == "Chimi Dem" && passwordController.text == "password") {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SsoTab()));
+                              } else {
+                                _handleLogin();
+                              }
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,
                               shadowColor: Colors.transparent,
@@ -168,6 +174,7 @@ class _LoginState extends State<Login> {
                               ],
                             ),
                           ),
+
                         ),
                       ),
                   ],

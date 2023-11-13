@@ -253,14 +253,21 @@ class _AllocateState extends State<Allocate>{
             SizedBox(height: 16),
 
             ElevatedButton(
-              onPressed: () async{
-                final success = await admData.insertAllocation(selectedRoomId!, selectedStudentId!, context);
-                if(success){
-                  setState(() {
-                    
-                  });
+              onPressed: () async {
+                if (selectedStudentId == null || selectedHostelId == null || selectedRoomId == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please select a student, hostel, and room.'),
+                    ),
+                  );
+                  return;
                 }
-                debugPrint("${selectedRoomId} ${selectedRoomNo} ${selectedStudentId}");               
+
+                final success = await admData.insertAllocation(selectedRoomId!, selectedStudentId!, context);
+                if (success) {
+                  setState(() {});
+                }
+                debugPrint("${selectedRoomId} ${selectedRoomNo} ${selectedStudentId}");
               },
               child: Text('Assign'),
             ),
