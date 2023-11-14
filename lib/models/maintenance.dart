@@ -5,6 +5,8 @@ class Maintenance{
   final DateTime date;
   final String description;
   final String status;
+  final int? roomno;
+  final String? hostel;
 
   Maintenance({
     required this.id,
@@ -13,6 +15,8 @@ class Maintenance{
     required this.date,
     required this.description,
     required this.status,
+    this.roomno,
+    this.hostel,
   });
 
    factory Maintenance.fromJson(Map<String, dynamic> json) {
@@ -23,6 +27,8 @@ class Maintenance{
       date: DateTime.parse(json['date']),
       description: json['description'],
       status: json['status'],
+      roomno: json['roomno'],
+      hostel: json['name'],
     );
   }
 }

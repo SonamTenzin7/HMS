@@ -80,8 +80,15 @@ class _StudentMaintenanceState extends State<StudentMaintenance> {
             context,
             MaterialPageRoute(
               builder: (context) => MaintenanceRequestPage(studentId: widget.studentId),
-            ),
-          );
+
+            )
+          ).then((result){
+            if(result){
+               setState(() {
+                maintenanceData = adm.getMaintenanceByStudent(widget.studentId);
+              });
+            }             
+            });
         },
         child: Icon(Icons.add),
       ),

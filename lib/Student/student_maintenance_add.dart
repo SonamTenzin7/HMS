@@ -112,15 +112,17 @@ class _MaintenanceRequestPageState extends State<MaintenanceRequestPage> {
                     onPressed: () async {
                       try {
                         Room data = await details; // Wait for the future to complete
-                        await adm.insertMaintenance(
+                        final success = await adm.insertMaintenance(
                           widget.studentId,
                           data.id!, // Access roomId from the obtained Room instance
                           reasonController.text,
                           dateController.text,
                           "Pending",
                           context,
-
                         );
+                        if(success){
+                          Navigator.pop(context, true);
+                        }
                       debugPrint(data.id.toString());
                       } catch (error) {
                         print('Error obtaining Room data: $error');

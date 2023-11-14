@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:studentlogin/models/hostel.dart';
 import 'package:studentlogin/db/database_operations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:studentlogin/sso/sso_hostel_detail.dart';
 
 class SsoHostel extends StatefulWidget {
@@ -64,11 +65,10 @@ class _SsoHostelState extends State<SsoHostel> {
                 if (hostel.gender == 'Male') {
                   genderIcon = Icon(FontAwesomeIcons.mars, color: Colors.blue);
                 } else if (hostel.gender == 'Female') {
-                  genderIcon = Icon(FontAwesomeIcons.venus, color: Colors.pink); 
+                  genderIcon = Icon(FontAwesomeIcons.venus, color: Colors.pink);
                 } else {
                   genderIcon = Icon(FontAwesomeIcons.mars, color: Colors.grey);
                 }
-
 
                 return GestureDetector(
                   onTap: () {
@@ -85,12 +85,41 @@ class _SsoHostelState extends State<SsoHostel> {
                   },
                   child: Card(
                     child: ListTile(
-                      title: Text("Hostel ${hostel.name}"),
+                      title: Text(
+                        "Hostel ${hostel.name}",
+                        style: GoogleFonts.raleway(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       subtitle: Row(
                         children: [
-                          genderIcon,
-                          Text("${hostel.gender}"),
-                          Text("Block Counsellor: ${hostel.fname} ${hostel.mname} ${hostel.lname}"),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  genderIcon,
+                                  SizedBox(width: 8),
+                                  Text(
+                                    "${hostel.gender}",
+                                    style: GoogleFonts.raleway(fontSize: 19),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "Block Counsellor: ${hostel.fname ?? 'unassigned'} ${hostel.mname ?? ''} ${hostel.lname ?? ''}",
+                                style: GoogleFonts.raleway(fontSize: 15),
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                "Residents: ${hostel.count ?? '0'}",
+                                style: GoogleFonts.raleway(fontSize: 16),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),

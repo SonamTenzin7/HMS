@@ -32,10 +32,6 @@ class CustomTabBar extends StatelessWidget {
             icon: Icon(FontAwesomeIcons.peopleGroup),
             text: 'Counsellor',
           ),
-          Tab(
-            icon: Icon(Icons.holiday_village),
-            text: 'SSO',
-          ),
         ],
       ),
     );

@@ -11,6 +11,7 @@ class Room{
   final String? dept;
   final String? year;
   final String? gender;
+  final String? occupancy;
 
   Room({
     this.id,
@@ -25,6 +26,7 @@ class Room{
     this.dept,
     this.year,
     this.gender,
+    this.occupancy,
   });
 
   factory Room.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class Room{
       dept: json['Dept'],
       year: json['Year'],
       gender: json['Gender'],
+      occupancy: json['occupancy'],
     );
   }
 }

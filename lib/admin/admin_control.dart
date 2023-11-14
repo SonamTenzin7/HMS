@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentlogin/admin/nav_bar.dart';
 import 'package:studentlogin/admin/admin_menu.dart';
-import 'package:studentlogin/admin/Maintence.dart';
 import 'package:studentlogin/admin/admin_home.dart';
 import 'admin_counsellor.dart';
 
@@ -16,7 +15,7 @@ class _AdmTabState extends State<AdmTab> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -35,7 +34,6 @@ class _AdmTabState extends State<AdmTab> with SingleTickerProviderStateMixin {
           MenuContent(),
           AdmHome(),
           CounsellorTab(),
-          HomePageWidget(),
         ],
       ),
     );

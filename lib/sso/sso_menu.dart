@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:studentlogin/models/maintenance.dart';
 import 'sso_allocate.dart';
 import 'package:studentlogin/student/login.dart';
+import 'sso_maintenance.dart';
 
 class MenuContent extends StatelessWidget {
   final TabController tabController;
@@ -17,33 +19,49 @@ class MenuContent extends StatelessWidget {
         SizedBox(height: 30),
         Hero(
           tag: 'admin-icon',
-          child: Icon(
-            Icons.person,
-            size: 40,
-            color: const Color.fromARGB(255, 108, 107, 107),
+          child: Row(
+            children: [
+              Icon(
+                Icons.person,
+                size: 75,
+                color: Colors.orange,
+              ),
+              SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Chimi Dem',
+                    style: GoogleFonts.raleway(
+                      fontSize: 24,
+                      color: const Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
+                  Text(
+                    'Student Service Officer',
+                    style: GoogleFonts.raleway(
+                      fontSize: 16,
+                      color: const Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
-        Text(
-          'Student_Service_Officer_Name',
-          style: GoogleFonts.raleway(
-            fontSize: 24,
-            color: const Color.fromARGB(255, 0, 0, 0),
-          ),
-        ),
+        
         SizedBox(height: 60),
         buildDivider(),
         buildMenuItem(
           onTap: () {},
-          tabIndex: 1, // Set the tab index for the "Hostel" tab
+          tabIndex: 1,
           icon: Icons.apartment,
           label: 'Hostel',
         ),
         buildDivider(),
         buildMenuItem(
-          onTap: () {
-
-          },
-          tabIndex: 2, // Set the tab index for the "Rooms" tab
+          onTap: () {},
+          tabIndex: 2,
           icon: Icons.hotel,
           label: 'Rooms',
         ),
@@ -55,19 +73,23 @@ class MenuContent extends StatelessWidget {
               MaterialPageRoute(builder: (context) => Allocate()),
             );
           },
-          tabIndex: 2,
+          tabIndex: 0,
           icon: Icons.holiday_village,
           label: 'Allocate Room',
         ),
-        buildDivider(),
+         buildDivider(),
         buildMenuItem(
           onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SsoMaintenance()),
+            );
           },
-          tabIndex: 2,
-          icon: Icons.transfer_within_a_station,
-          label: 'Request Room Change',
+          tabIndex: 0,
+          icon: Icons.settings,
+          label: 'Maintenance Requests',
         ),
-        buildDivider(), // Add a divider
+        buildDivider(),
         buildMenuItem(
           onTap: () {
             Navigator.push(
@@ -75,11 +97,11 @@ class MenuContent extends StatelessWidget {
               MaterialPageRoute(builder: (context) => Login()),
             );
           },
-          tabIndex: 0, // Set the tab index for the "Menu" tab
+          tabIndex: 0,
           icon: Icons.logout,
           label: 'Log Out',
-          color: Colors.grey,
         ),
+        buildDivider(),
       ],
     );
   }
@@ -93,14 +115,14 @@ class MenuContent extends StatelessWidget {
   }) {
     return GestureDetector(
       onTap: () {
-        onTap(); // Execute the provided onTap function
-        tabController.animateTo(tabIndex!); // Change the tab index
+        onTap();
+        tabController.animateTo(tabIndex!);
       },
       child: Container(
         width: double.infinity,
         height: 55,
         child: Card(
-          elevation: 0, // Remove elevation
+          elevation: 0,
           color: color ?? Colors.transparent,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

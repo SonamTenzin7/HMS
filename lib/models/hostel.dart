@@ -5,6 +5,7 @@ class Hostel {
   final String? fname;
   final String? mname;
   final String? lname;
+  final String? count;
 
   Hostel({
     this.id,
@@ -13,6 +14,7 @@ class Hostel {
     this.fname,
     this.mname,
     this.lname,
+    this.count,
   });
 
   factory Hostel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class Hostel {
       fname: json['FName'],
       mname: json['MName'],
       lname: json['LName'],
+      count: json['allocated_count'],
     );
   }
 }

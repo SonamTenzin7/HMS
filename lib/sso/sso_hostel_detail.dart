@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:studentlogin/db/database_operations.dart';
 import 'package:studentlogin/models/hostel.dart';
 import 'package:studentlogin/models/room.dart';
+import 'package:google_fonts/google_fonts.dart';  
 import 'sso_room_detail.dart';
 
 class HostelinDetail extends StatefulWidget {
@@ -40,6 +41,14 @@ class _HostelinDetailState extends State<HostelinDetail> {
     }).toList();
   }
 
+  int calculateTotalCapacity() {
+    return rooms.fold(0, (sum, room) => sum + room.capacity);
+  }
+
+  int calculateTotalOccupancy() {
+    return rooms.fold(0, (sum, room) => sum + int.parse(room.occupancy!));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +63,10 @@ class _HostelinDetailState extends State<HostelinDetail> {
                   });
                 },
               )
-            : Text('Hostel ' + widget.hostel.name),
+            : Text(
+                'Hostel ' + widget.hostel.name,
+                style: GoogleFonts.raleway(),  // Apply Google Fonts
+              ),
         actions: <Widget>[
           isSearching
               ? IconButton(
@@ -81,32 +93,83 @@ class _HostelinDetailState extends State<HostelinDetail> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Hostel Capacity: ${calculateTotalCapacity()}',
+                style: GoogleFonts.raleway(  // Apply Google Fonts
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Hostel Occupancy: ${calculateTotalOccupancy()}',
+                style: GoogleFonts.raleway(  // Apply Google Fonts
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: DataTable(
                   columns: [
-                    DataColumn(label: Text('Room Number')),
-                    DataColumn(label: Text('Capacity')),
+                    DataColumn(
+                      label: Text(
+                        'Room Number',
+                        style: GoogleFonts.raleway(),  // Apply Google Fonts
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Capacity',
+                        style: GoogleFonts.raleway(),  // Apply Google Fonts
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Occupancy',
+                        style: GoogleFonts.raleway(),  // Apply Google Fonts
+                      ),
+                    ),
                   ],
                   rows: filteredRooms.map((room) {
                     return DataRow(
                       cells: [
                         DataCell(
                           GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => RoomDetailsScreen(
-                                  room: room,
-                                  hostelName: widget.hostel.name),
-                              ),
-                            );
-                          },
-                          child: Text(room.roomno.toString()),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => RoomDetailsScreen(
+                                    room: room,
+                                    hostelName: widget.hostel.name,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              room.roomno.toString(),
+                              style: GoogleFonts.raleway(),  // Apply Google Fonts
+                            ),
                           ),
                         ),
-                        DataCell(Text(room.capacity.toString())),
+                        DataCell(
+                          Text(
+                            room.capacity.toString(),
+                            style: GoogleFonts.raleway(),  // Apply Google Fonts
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            room.occupancy.toString(),
+                            style: GoogleFonts.raleway(),  // Apply Google Fonts
+                          ),
+                        ),
                       ],
                     );
                   }).toList(),

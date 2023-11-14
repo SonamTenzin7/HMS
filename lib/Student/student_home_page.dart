@@ -67,7 +67,7 @@ class _StudentHomePageState extends State<StudentHomePage>
                 icon: Icon(FontAwesomeIcons.bars),
               ),
               Tab(
-                icon: Icon(FontAwesomeIcons.home),
+                icon: Icon(Icons.hotel),
               ),
               Tab(
                 icon: Icon(FontAwesomeIcons.wrench),

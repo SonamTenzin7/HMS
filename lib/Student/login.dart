@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:studentlogin/Student/bc_home_page.dart';
 import 'package:studentlogin/Student/student_home_page.dart';
+import 'package:studentlogin/admin/admin_control.dart';
 import '../sso/sso_tabs.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -27,12 +24,12 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void _handleLogin() async {
+  void  _handleLogin(context) async {
     final String enteredEmail = emailController.text;
     final String enteredPassword = passwordController.text;
 
     
-    final String apiUrl = 'http://10.2.28.201:3000/login';
+    final String apiUrl = 'http://192.168.223.28:3000/login';
 
     try {
       final response = await http.post(
@@ -44,10 +41,20 @@ class _LoginState extends State<Login> {
       if (response.statusCode == 200) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => StudentHomePage(studentId: emailController.text)));
       } else {
-        // Login failed
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login failed: Invalid username or password'),
+          ),
+        );
+    
         print('Login failed: ${response.body}');
       }
     } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login failed: $error'),
+          ),
+        );
       print('Error in login: $error');
     }
   }
@@ -94,7 +101,7 @@ class _LoginState extends State<Login> {
                         child: TextField(
                           controller: emailController,
                           decoration: InputDecoration(
-                            labelText: 'Email Address',
+                            labelText: 'Username',
                             prefixIcon: Padding(
                               padding: const EdgeInsets.all(10),
                               child: SvgPicture.asset('images/email.svg'),
@@ -149,8 +156,12 @@ class _LoginState extends State<Login> {
                             onPressed: () {
                               if (emailController.text == "Chimi Dem" && passwordController.text == "password") {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => SsoTab()));
-                              } else {
-                                _handleLogin();
+                              }
+                              else if (emailController.text == "Admin" && passwordController.text == "admin") {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => AdmTab()));
+                              } 
+                              else {
+                                _handleLogin(context);
                               }
                             },
                             style: ElevatedButton.styleFrom(

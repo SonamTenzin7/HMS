@@ -43,7 +43,6 @@ class _HostelDetailState extends State<HostelDetail> {
 
   void updateHostelData() async {
   setState(() {
-    // Trigger a rebuild of the widget to reflect the updated data
   });
 }
 
@@ -170,41 +169,43 @@ class _HostelDetailState extends State<HostelDetail> {
   }
 
   void _showConfirmationDialog(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirm Deletion'),
-          content: Text('Are you sure you want to delete Hostel ${widget.hostel.name}? This action is irreversible.'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Delete'),
-              onPressed: () async {
-                final roomDeleted = await adminData.deleteRooms(widget.hostel.id, context);
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Confirm Deletion'),
+        content: Text('Are you sure you want to delete Hostel ${widget.hostel.name}? This action is irreversible.'),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Delete'),
+            onPressed: () async {
+              final roomDeleted = await adminData.deleteRooms(widget.hostel.id, context);
 
-                if (roomDeleted){
-                   final deleted = await adminData.deleteHostel(widget.hostel.id, context);
-                if (deleted) {
-
-                  Navigator.of(context).pop();
-                  Navigator.pop(context, true);
-                } else {
-
+              if (roomDeleted) {
+                if (mounted) {
+                  final deleted = await adminData.deleteHostel(widget.hostel.id, context);
+                  if (deleted) {
+                    Navigator.of(context).pop();
+                    Navigator.pop(context, true);
+                  } else {
+                    // Handle error or show a message
+                  }
                 }
               }
-            }
-            )
-          ],
-        );
-      },
-    );
-  }
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   
   void _showDeleteConfirmationDialog(BuildContext context, Room room) {

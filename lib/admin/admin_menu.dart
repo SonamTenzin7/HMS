@@ -25,108 +25,76 @@ class MenuContent extends StatelessWidget {
           ),
         ),
         SizedBox(height: 60),
-        GestureDetector(
+        buildDivider(),
+        buildMenuItem(
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddHostel()), // Use 'AddHostel' widget
+              MaterialPageRoute(builder: (context) => AddHostel()),
             );
           },
-          child: AnimatedContainer(
-            duration: Duration(seconds: 1),
-            width: 400,
-            height: 100,
-            child: Card(
-              elevation: 8,
-              color: Colors.blue,
-              child: Column(
-                children: [
-                  SizedBox(height: 10),
-                  Icon(
-                    Icons.holiday_village,
-                    size: 40,
-                    color: Colors.white,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Add Hostel',
-                    style:
-                        GoogleFonts.raleway(fontSize: 20, color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          icon: Icons.holiday_village,
+          label: 'Add Hostel',
+          color: Colors.blue,
         ),
-        SizedBox(height: 20),
-        GestureDetector(
-          onTap: () {
-            // Handle 'Request Room Change' logic here
-          },
-          child: AnimatedContainer(
-            duration: Duration(seconds: 1),
-            width: 400,
-            height: 100,
-            child: Card(
-              elevation: 8,
-              color: Colors.blue,
-              child: Column(
-                children: [
-                  SizedBox(height: 10),
-                  Icon(
-                    Icons.transfer_within_a_station,
-                    size: 40,
-                    color: Colors.white,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Request Room Change',
-                    style:
-                        GoogleFonts.raleway(fontSize: 20, color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 20),
-        GestureDetector(
+        buildDivider(),
+        buildMenuItem(
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Login()),
             );
           },
-          child: AnimatedContainer(
-            duration: Duration(seconds: 1),
-            width: 400,
-            height: 50,
-            child: Card(
-              elevation: 8,
-              color: Colors.grey,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.logout,
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Log Out',
-                      style: GoogleFonts.raleway(
-                          fontSize: 18, color: Colors.black),
-                    ),
-                  ],
+          icon: Icons.logout,
+          label: 'Log Out',
+          color: Colors.grey,
+        ),
+      ],
+    );
+  }
+
+  Widget buildMenuItem({
+    required VoidCallback onTap,
+    required IconData icon,
+    required String label,
+    Color? color,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 55,
+        child: Card(
+          elevation: 0,
+          color: color ?? Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                  size: 30,
+                  color: Colors.white,
                 ),
-              ),
+                SizedBox(width: 16),
+                Text(
+                  label,
+                  style: GoogleFonts.raleway(fontSize: 20, color: Colors.white),
+                ),
+              ],
             ),
           ),
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget buildDivider() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Divider(
+        color: Colors.grey.withOpacity(0.5),
+      ),
     );
   }
 }

@@ -7,8 +7,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class AdminData{
-  final String ip = "10.2.28.201";
-  
+  final String ip = "192.168.223.28";
 
   Future<List<Hostel>> retrieveHostels() async {
     final Uri url = Uri.parse('http://$ip:3000/api/allhostels');
@@ -423,7 +422,7 @@ class AdminData{
       } else if(response.statusCode == 409){
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Duplicate entry'),
+            content: Text('Duplicate entry for ${sid}'),
           ),
         );
         return false;
@@ -561,7 +560,7 @@ class AdminData{
     print('Error in requesting Maintenance: $e');
     return false;
   }
-}
+  } 
   Future<bool> deleteMaintenance(int id) async {
     final Uri url = Uri.parse('http://$ip:3000/api/delmaintenance/$id');
     try {
@@ -575,6 +574,72 @@ class AdminData{
     } catch (e) {
       print('Error: $e');
       return false;
+    }
+  }
+
+  Future<bool> removeAllocation(String stuId) async {
+    final Uri url = Uri.parse('http://$ip:3000/api/delallo/$stuId'); // Replace with your server URL and endpoint
+    try {
+      final response = await http.delete(url);
+
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Error: $e');
+      return false;
+      }
+  }
+
+   Future<List<Maintenance>> retrieveMaintenanceRequests() async{
+    final Uri url = Uri.parse("http://$ip:3000/api/getmr"); 
+    final response = await http.get(url);
+
+    if(response.statusCode == 200){
+      final List<dynamic> jsonData = json.decode(response.body);
+      
+      List<Maintenance> maintenance = jsonData
+        .map((entry) => Maintenance.fromJson(entry as Map<String, dynamic>))
+        .toList();
+      return maintenance;
+    } else {
+      throw Exception('Failed to load maintenance req.');
+    }
+  }
+
+   Future<void> rejectMaintenance(int id) async {
+    final Uri url = Uri.parse('http://$ip:3000/api/delmain/$id');
+    try {
+    await http.delete(url);
+    } catch (e) {
+      print('Error: $e');
+      }
+  }
+
+  Future<void> acceptMaintenance(int id) async {
+    final Uri url = Uri.parse('http://$ip:3000/api/accmain/$id');
+    try {
+      await http.put(url);
+    } catch (e) {
+      print('Error: $e');
+      }
+  }
+
+  Future<List<Maintenance>> retrieveMaintenanceRequestsOld() async{
+    final Uri url = Uri.parse("http://$ip:3000/api/getmrold"); 
+    final response = await http.get(url);
+
+    if(response.statusCode == 200){
+      final List<dynamic> jsonData = json.decode(response.body);
+      
+      List<Maintenance> maintenance = jsonData
+        .map((entry) => Maintenance.fromJson(entry as Map<String, dynamic>))
+        .toList();
+      return maintenance;
+    } else {
+      throw Exception('Failed to load maintenance req.');
     }
   }
 }

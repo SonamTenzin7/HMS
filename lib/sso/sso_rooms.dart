@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/room.dart';
 import '../db/database_operations.dart';
+import 'sso_room_detail.dart';
+import 'package:google_fonts/google_fonts.dart';  // Import Google Fonts
 
 class Rooms extends StatefulWidget {
   @override
@@ -80,62 +82,125 @@ class _StateRooms extends State<Rooms> {
                       scrollDirection: Axis.vertical,
                       child: DataTable(
                         columns: [
-                          DataColumn(label: Text('Room Number')),
-                          DataColumn(label: Text('Hostel')),
-                          DataColumn(label: Text('Student ID')),
-                          DataColumn(label: Text('Name')),
-                          DataColumn(label: Text('Deptartment')),
-                          DataColumn(label: Text('Year')),
-                          DataColumn(label: Text('Gender')),
+                          DataColumn(
+                            label: Text(
+                              'Room Number',
+                              style: GoogleFonts.raleway(),  // Apply Google Fonts
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Hostel',
+                              style: GoogleFonts.raleway(),  // Apply Google Fonts
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Student ID',
+                              style: GoogleFonts.raleway(),  // Apply Google Fonts
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Name',
+                              style: GoogleFonts.raleway(),  // Apply Google Fonts
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Deptartment',
+                              style: GoogleFonts.raleway(),  // Apply Google Fonts
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Year',
+                              style: GoogleFonts.raleway(),  // Apply Google Fonts
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Gender',
+                              style: GoogleFonts.raleway(),  // Apply Google Fonts
+                            ),
+                          ),
                         ],
                         rows: filteredRooms.map((student) {
                           return DataRow(
                             cells: [
                               DataCell(InkWell(
-                                onTap: () { 
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => RoomDetailsScreen(
+                                        room: student,
+                                        hostelName: student.hname!,
+                                      ),
+                                    ),
+                                  );
                                   print('Tapped on room ${student.roomno}');
                                 },
-                                child: Text('${student.roomno}'),
+                                child: Text(
+                                  '${student.roomno}',
+                                  style: GoogleFonts.raleway(),  // Apply Google Fonts
+                                ),
                               )),
                               DataCell(InkWell(
                                 onTap: () {
                                   print('Tapped on hostel ${student.hname}');
                                 },
-                                child: Text('${student.hname}'),
+                                child: Text(
+                                  '${student.hname}',
+                                  style: GoogleFonts.raleway(),  // Apply Google Fonts
+                                ),
                               )),
                               DataCell(InkWell(
                                 onTap: () {
                                   print('Tapped on student ID ${student.sid ?? ""}');
                                 },
-                                child: Text('${student.sid ?? ""}'),
+                                child: Text(
+                                  '${student.sid ?? ""}',
+                                  style: GoogleFonts.raleway(),  // Apply Google Fonts
+                                ),
                               )),
                               DataCell(InkWell(
                                 onTap: () {
                                   print('Tapped on name ${student.fname ?? ""} ${student.mname ?? ""} ${student.lname ?? ""}');
                                 },
                                 child: Text(
-                                    '${student.fname ?? ""} ${student.mname ?? ""} ${student.lname ?? ""}'),
+                                  '${student.fname ?? ""} ${student.mname ?? ""} ${student.lname ?? ""}',
+                                  style: GoogleFonts.raleway(),  // Apply Google Fonts
+                                ),
                               )),
                               DataCell(InkWell(
                                 onTap: () {
                                   // Handle tap on the row
                                   print('Tapped on department ${student.dept ?? ""}');
                                 },
-                                child: Text('${student.dept ?? ""}'),
+                                child: Text(
+                                  '${student.dept ?? ""}',
+                                  style: GoogleFonts.raleway(),  // Apply Google Fonts
+                                ),
                               )),
                               DataCell(InkWell(
                                 onTap: () {
                                   // Handle tap on the row
                                   print('Tapped on year ${student.year ?? ""}');
                                 },
-                                child: Text('${student.year ?? ""}'),
+                                child: Text(
+                                  '${student.year ?? ""}',
+                                  style: GoogleFonts.raleway(),  // Apply Google Fonts
+                                ),
                               )),
                               DataCell(InkWell(
                                 onTap: () {
                                   // Handle tap on the row
                                   print('Tapped on gender ${student.gender ?? ""}');
                                 },
-                                child: Text('${student.gender ?? ""}'),
+                                child: Text(
+                                  '${student.gender ?? ""}',
+                                  style: GoogleFonts.raleway(),  // Apply Google Fonts
+                                ),
                               )),
                             ],
                           );

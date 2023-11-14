@@ -79,8 +79,8 @@ class AddCounselorState extends State<AddCounselor> {
                     ),
                     itemFilter: (item, query) {
                       return item.fname.toLowerCase().contains(query.toLowerCase()) ||
-                            item.mname.toLowerCase().contains(query.toLowerCase()) ||
-                            item.lname.toLowerCase().contains(query.toLowerCase()) ||
+                            item.mname!.toLowerCase().contains(query.toLowerCase()) ||
+                            item.lname!.toLowerCase().contains(query.toLowerCase()) ||
                             item.id.contains(query);
                     },
                     itemSorter: (a, b) {
@@ -98,7 +98,7 @@ class AddCounselorState extends State<AddCounselor> {
                     },
                     itemBuilder: (context, item) {
                       return ListTile(
-                        title: Text(item.fname + ' ' + item.mname + ' ' + item.lname),
+                        title: Text(item.fname + ' ' + item.mname! + ' ' + item.lname!),
                         subtitle: Text(item.id.toString()),
                       );
                     },

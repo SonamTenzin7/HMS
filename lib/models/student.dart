@@ -1,8 +1,8 @@
 class Student{
   final String id;
   final String fname;
-  final String mname;
-  final String lname;
+  final String? mname;
+  final String? lname;
   final String dept;
   final String year;
   final String password;
@@ -13,8 +13,8 @@ class Student{
   Student({
     required this.id,
     required this.fname,
-    required this.mname,
-    required this.lname,
+    this.mname,
+    this.lname,
     required this.dept,
     required this.year,
     required this.password,

@@ -6,11 +6,13 @@ import '../models/student.dart';
 
 class StudentMenu extends StatefulWidget {
   final studentId;
-  final VoidCallback? onMaintenanceRequestTap; // Define the callback
+  final VoidCallback? onMaintenanceRequestTap;
+  final VoidCallback? onHostelTap; // Add a callback for Hostel tab
 
   const StudentMenu({
     required this.studentId,
     this.onMaintenanceRequestTap,
+    this.onHostelTap,
   });
 
   _StudentMenuState createState() => _StudentMenuState();
@@ -91,9 +93,12 @@ class _StudentMenuState extends State<StudentMenu> {
           SizedBox(height: 20),
           InkWell(
             onTap: () {
+              if (widget.onHostelTap != null) {
+                widget.onHostelTap!(); // Invoke the callback for Hostel tab
+              }
             },
             child: CardItem(
-              icon: Icons.home,
+              icon: Icons.hotel,
               title: 'Hostel',
             ),
           ),
@@ -101,23 +106,12 @@ class _StudentMenuState extends State<StudentMenu> {
           InkWell(
             onTap: () {
               if (widget.onMaintenanceRequestTap != null) {
-                widget.onMaintenanceRequestTap!(); // Call the callback to navigate to the "Maintenance Request" tab
+                widget.onMaintenanceRequestTap!();
               }
             },
             child: CardItem(
               icon: FontAwesomeIcons.wrench,
               title: 'Maintenance Request',
-            ),
-          ),
-
-          SizedBox(height: 10),
-          InkWell(
-            onTap: () {
-              // Add logic for Room Change Request
-            },
-            child: CardItem(
-              icon: Icons.transfer_within_a_station,
-              title: 'Request Room Change',
             ),
           ),
           SizedBox(height: 10),
@@ -142,29 +136,32 @@ class _StudentMenuState extends State<StudentMenu> {
   }
 }
 
-
 class CardItem extends StatelessWidget {
   final IconData icon;
   final String title;
+  final VoidCallback? onTap; // Add a callback function
 
   CardItem({
     required this.icon,
     required this.title,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
+      color: const Color.fromARGB(255, 255, 255, 255),
       child: ListTile(
+        onTap: onTap, // Invoke the callback when the ListTile is tapped
         leading: Icon(
           icon,
-          size: 40,
-          color: Colors.blue,
+          size: 30,
+          color: const Color.fromARGB(255, 0, 0, 0),
         ),
         title: Text(
           title,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20, color: const Color.fromARGB(255, 0, 0, 0)),
         ),
       ),
     );
